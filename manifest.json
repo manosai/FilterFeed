@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+
+  "name": "FB FeedFilter",
+  "description": "Filter your news feed!",
+  "version": "1.0",
+
+  "icons": {
+    "128": "buzzkill-logo.jpg"
+  },
+
+  "permissions": [
+    "https://www.facebook.com/",
+    "http://www.facebook.com/",
+    "tabs",
+    "storage"
+  ],
+
+  "background": {
+    "scripts": ["bootstrap.js"],
+    "persistent": false
+  },
+
+  "page_action": {
+    "default_title": "FeedFilter",
+    "default_icon": "buzzkill-logo.jpg",
+    "default_popup": "popup.html"
+  }
+
+}

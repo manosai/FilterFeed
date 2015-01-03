@@ -2,6 +2,8 @@ var killed_stories = [];
 
 function buzzkill(){
 
+  console.log("you should only see this on FB"); 
+
   // be a buzz kill in news feed & groups
   stories = document.getElementsByClassName("_5uch");
   for(var i=0; i < stories.length; i++){
@@ -58,6 +60,5 @@ function killItem(item, linkType, pageType){
 }
 
 // be gone, productivity destroyers!
-console.log("Killing all the buzz in your feed...");
 buzzkill();
 document.addEventListener("scroll", buzzkill);

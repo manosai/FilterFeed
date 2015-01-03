@@ -6,6 +6,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
 // see: http://developer.chrome.com/extensions/tabs.html#event-onUpdated
 chrome.tabs.onUpdated.addListener(function(id, info, tab){
 
+
     // decide if we're ready to inject content script
     if (tab.status !== "complete"){
         console.log("not yet");
@@ -15,6 +16,8 @@ chrome.tabs.onUpdated.addListener(function(id, info, tab){
         console.log("not here");
         return;
     }
+
+    console.log(tab.url.toLowerCase().indexOf("facebook.com")); 
 
     if (localStorage["existing_user"] == "true"){
 

@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
 
-  "name": "FB FeedFilter",
+  "name": "FB FilterFeed",
   "description": "Filter your news feed!",
   "version": "1.0",
 
@@ -22,7 +22,7 @@
   },
 
   "page_action": {
-    "default_title": "FeedFilter",
+    "default_title": "FilterFeed",
     "default_icon": "buzzkill-logo.jpg",
     "default_popup": "popup.html"
   }

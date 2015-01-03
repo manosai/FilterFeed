@@ -6,7 +6,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
 // setting up context menu for when the extension is installed
 chrome.runtime.onInstalled.addListener(function() {
     var context = "selection"; 
-    var title = "Filter " + window.getSelection().toString() + " from news feed";
+    var title = "Filter %s from news feed";
     var id = chrome.contextMenus.create({"title": title, "contexts":[context], "id":"context" + context}); 
 });
 // Listen for any changes to the URL of any tab.

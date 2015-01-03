@@ -2,6 +2,13 @@
 chrome.runtime.onInstalled.addListener(function(details) {
     localStorage["existing_user"] = true;
 });
+
+// setting up context menu for when the extension is installed
+chrome.runtime.onInstalled.addListener(function() {
+    var context = "selection"; 
+    var title = "Filter " + window.getSelection().toString() + " from news feed";
+    var id = chrome.contextMenus.create({"title": title, "contexts":[context], "id":"context" + context}); 
+});
 // Listen for any changes to the URL of any tab.
 // see: http://developer.chrome.com/extensions/tabs.html#event-onUpdated
 chrome.tabs.onUpdated.addListener(function(id, info, tab){

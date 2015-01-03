@@ -14,7 +14,8 @@
     "http://www.facebook.com/",
     "tabs",
     "storage", 
-    "notifications"
+    "notifications", 
+    "contextMenus"
   ],
 
   "background": {

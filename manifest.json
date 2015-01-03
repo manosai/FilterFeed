@@ -13,7 +13,8 @@
     "https://www.facebook.com/",
     "http://www.facebook.com/",
     "tabs",
-    "storage"
+    "storage", 
+    "notifications"
   ],
 
   "background": {
@@ -23,7 +24,7 @@
 
   "page_action": {
     "default_title": "FilterFeed",
-    "default_icon": "buzzkill-logo.jpg",
+    "default_icon": "toolbar_icon.png",
     "default_popup": "popup.html"
   }
 

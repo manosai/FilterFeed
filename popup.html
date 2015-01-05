@@ -1,31 +1,138 @@
-<!doctype html>
 <html>
-  <head>
-    <title>Getting Started Extension's Popup</title>
-    <style>
-      body {
-        min-width: 357px;
-        overflow-x: hidden;
-      }
+    <head>
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.1/pure-min.css">
+        <link rel="stylesheet" href="main.css">
+        <style type="text/css">
+             body {
+                width: 500px;
+                overflow: hidden;
+             }
+             p{
+                text-align: center;
+             }
+             .form-actions {
+                margin-top: 10px;
+                text-align: center;
+             }
+             .input-group {
+                padding-top: 10px;
+             }
 
-      img {
-        margin: 5px;
-        border: 2px solid black;
-        vertical-align: middle;
-        width: 75px;
-        height: 75px;
-      }
-    </style>
+             .well {
+                padding: 2px;
+                background-color: #D48D42;
+             }
 
-    <!--
-      - JavaScript and HTML must be in separate files: see our Content Security
-      - Policy documentation[1] for details and explanation.
-      -
-      - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
-     -->
-    <script src="popup.js"></script>
-  </head>
-  <body>
-  </body>
+             #logout {
+                cursor: pointer;
+                min-height:0px;
+                height: 30px;
+             }
+
+             #header {
+                min-height:0px;
+                height: 50px;
+             }
+
+             #content1 {
+                min-height:0px;
+                height: 180px;
+                float:left;
+             }
+
+             #content2 {
+                min-height:0px;
+                height: 220px;
+             }
+
+             #logouttext {
+                cursor: pointer;
+                margin-top: 0.4em;
+                font-size: 1em;
+             }
+
+             .tightDash {
+                margin-top: 0.5em;
+             }
+
+             .tighterDash {
+                margin-top: 0.5em;
+             }
+
+             .lowerDash {
+                text-transform: none;
+             }
+
+
+              body {
+                width: 500px;
+                height: 100px;
+                overflow: hidden;
+             }
+             p{
+                text-align: center;
+             }
+             .form-actions {
+                margin-top: 10px;
+                text-align: center;
+             }
+             .input-group {
+                padding-top: 10px;
+             }
+
+             footer {
+             }
+             }
+         </style>
+    </head>
+    <body>
+        <div class="pure-u-1 dashboard-piece dashboard-piece-orangebg" id="header">
+                <div class="dashboard-content">
+                    <p class="dashboard-metric tighterDash">Facebook FilterFeed</p>
+                </div>
+            </div>
+
+            <div class="pure-u-1 dashboard-piece dashboard-piece-bluebg" id="content1">
+                <div class="dashboard-content">
+                    <p class="dashboard-metric tighterDash lowerDash">Existing Coinbase User?</p>
+                    <div class="col-lg-6">
+            <div class="input-group">
+                <span class="input-group-addon" style="background-color:#6D9DD1; border:none">Email or Bitcoin Wallet:</span>
+                <input type="text" class="form-control" id="bitcoin_addr"></input>
+            </div><!-- /input-group -->
+            <div class="form-actions">
+                <button type="button" class="btn btn-default" id="login_button">Sign in</button>
+            </div>
+        </div><!-- /.col-lg-6 -->
+                </div>
+            </div>
+
+       <div class="pure-u-1 dashboard-piece dashboard-piece-purplebg" id="content2">
+                <div class="dashboard-content">
+                    <p class="dashboard-metric tighterDash lowerDash">New User?</p>
+                    <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon" style="background-color:#7E45D3; border:none">Email:</span>
+                    <input type="text" class="form-control" id="email"></input>
+                </div><!-- /input-group -->
+                 <div class="input-group">
+                    <span class="input-group-addon" style="background-color:#7E45D3; border:none"> Password:</span>
+                    <input type="password" class="form-control" id="pass"></input>
+                </div><!-- /input-group -->
+                <div class="form-actions">
+                    <button type="button" class="btn btn-default" id="make_acct">Make new account!</button>
+              </div>
+                </div><!-- /.col-lg-6 -->
+                </div>
+        </div>
+
+        
+        <footer>
+            Defu, Manosai, Matt, Vishwa
+        </footer>
+    </body>
+    <script src="jquery-2.0.3.js"></script>
+    <script src="bootstrap.js"></script>
+    <script src="home.js"></script>
 </html>
-

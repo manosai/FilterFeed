@@ -238,6 +238,9 @@ footer {
     padding: 10px;
     font-size: 0.6em;
     font-weight: bold;
+    text-align: center;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 @media only screen and (max-width:767px) {

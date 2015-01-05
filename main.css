@@ -152,7 +152,7 @@ textarea {
     background-color: #E7E737;
 }
 .dashboard-piece-bluebg {
-    background-color: #6D9DD1;
+    background-color: #3b5998;
 }
 .dashboard-piece-purplebg {
     background-color: #7E45D3;
@@ -233,14 +233,19 @@ textarea {
     padding-top: 60px;
 }
 footer {
-    background: rgb(20,20,20);
-    color: #aaa;
-    padding: 10px;
+    background: rgb(216, 223, 234);
+    color: black;
+    bottom: 0;
+    position:fixed;
+    width:100%;
     font-size: 0.6em;
     font-weight: bold;
     text-align: center;
-    margin-left:auto;
-    margin-right:auto;
+}
+.p foot {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 15px;
 }
 
 @media only screen and (max-width:767px) {

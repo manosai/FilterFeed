@@ -1,9 +1,21 @@
-$("#keywords").keyup(function(event){
-    if(event.keyCode == 13){
-        $("#submit_button").click();
-    }
-});
+$(document).ready(function() {
 
-function addKeyword() {
-	console.log("success"); 
-}
+	$("#submit_button").click(function (e) {
+		console.log("success"); 
+
+		// display the added words in the popup 
+
+
+		// clear the textbox
+		$("#keywords").value = ""; 
+	}); 
+
+
+	// listen for enter keypress
+	$("#keywords").keyup(function(event){
+    	if(event.keyCode == 13){
+        	$("#submit_button").click();
+    	}
+	});
+}); 
+

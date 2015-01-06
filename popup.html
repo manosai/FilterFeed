@@ -97,9 +97,11 @@
                         <input type="text" class="form-control" placeholder="Enter your keywords here..." id="keywords"></input>
                       </div><!-- /input-group -->
                       <div class="form-actions">
-                        <button onclick="addKeyword()" type="button" class="btn btn-default" id="submit_button">Add Keyword</button>
+                        <button type="button" class="btn btn-default" id="submit_button">Add Keyword</button>
                       </div>
                     </div><!-- /.col-lg-6 -->
+                    <div id="keyword_list">
+                    </div>
                     <footer>
                       <p class="foot">Created by <a href="http://www.twitter.com/manosaie" target="_blank">Manosai</a></p>
                     </footer>
@@ -109,20 +111,7 @@
         
         
     </body>
-    <script src="jquery-2.0.3.js"></script>
+    <script src="jquery.js"></script>
     <script src="bootstrap.js"></script>
     <script src="home.js"></script>
-    <script>
-
-      $("#keywords").keyup(function(event){
-        if(event.keyCode == 13){
-          $("#submit_button").click();
-        }
-      });
-
-      function addKeyword() {
-        console.log("success"); 
-      }
-
-    </script>
 </html>

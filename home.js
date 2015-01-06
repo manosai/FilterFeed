@@ -7,7 +7,7 @@ $(document).ready(function() {
 
 
 		// clear the textbox
-		$("#keywords").value = ""; 
+		$("#keywords").val(''); 
 	}); 
 
 

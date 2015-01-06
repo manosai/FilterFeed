@@ -235,9 +235,10 @@ textarea {
 footer {
     background: rgb(216, 223, 234);
     color: black;
-    bottom: 0;
+    bottom:-3;
     position:fixed;
     width:100%;
+    height:30px;
     font-size: 0.6em;
     font-weight: bold;
     text-align: center;
@@ -245,8 +246,8 @@ footer {
 .p foot {
     display: table-cell;
     vertical-align: middle;
-    padding: 15px;
 }
+
 
 @media only screen and (max-width:767px) {
     .pure-g-r>[class ^="pure-u"]{width:50%; float: left;}

@@ -4,24 +4,20 @@ $(document).ready(function() {
 	chrome.storage.local.get('words', function(data) {
 		// words exist
 		if (!$.isEmptyObject(data)) {
-			console.log(data); 
-			console.log(data.words[0]); 
+			var word_list =[]; 
+			for (i = 0; i < data.words.length; i++) { 
+				word_list.push(data.words[i]); 
+			}
+			console.log(word_list); 
 			var counter = 0;  
 			var html = ""; 
+			$("#keyword_list").append("<ul id='navlist'></ul>");
 			for (i = 0; i < data.words.length; i++) {
+				html += "<li>" + data.words[i] + "</li>"; 
 				console.log(data.words[i]); 
-				// adding the first word
-				if (i == 0) {
-					html += "<ul id ='navlist'><li>" + data.words[i] + "</li></ul>";
-					$("#keyword_list").append(html);
-				}
-				// adding the rest
-				else {
-					html += "<li>" + data.words[i] + "</li>"; 
-					$("#keyword_list ul").append(html); 
-				}
+				 
 			}
-
+			$("#keyword_list ul").append(html);
 		}
 	}); 
 
@@ -30,13 +26,16 @@ $(document).ready(function() {
 		console.log(word); 
 		var word_list = []; 
 		chrome.storage.local.get('words', function(data) {
-			for (item in data) { 
-				word_list.push(item); 
+			if (!$.isEmptyObject(data)) {
+				for (i = 0; i < data.words.length; i++) { 
+					word_list.push(data.words[i]); 
+				}
 			}
+			word_list.push(word); 
+			// add the word to local storage
+			chrome.storage.local.set({'words': word_list}); 
+			console.log("we just added a word"); 
 		}); 
-		word_list.push(word); 
-		// add the word to local storage
-		chrome.storage.local.set({'words': word_list}); 
 
 		// display the added words in the popup 
 		var html = ""; 
@@ -44,11 +43,13 @@ $(document).ready(function() {
 		// adding additional keywords 
 		if (ul.length) {
 			html += "<li>" + word + "</li>"; 
+			console.log(word); 
 			$("#keyword_list ul").append(html); 
 		}
 		// adding the first keyword
 		else {
 			html += "<ul id ='navlist'><li>" + word + "</li></ul>"; 
+			console.log(word); 
 			$("#keyword_list").append(html);
 		} 
 

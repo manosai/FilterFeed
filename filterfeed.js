@@ -25,7 +25,7 @@ function finalFilter(data, status_list, item) {
   }     
   for (a = 0; a < data.words.length; a++) {
     for (b = 0; b < status_list.length; b++) {
-      if (status_list[b].indexOf(data.words[a]) !== -1) {
+      if (status_list[b].toLowerCase().indexOf(data.words[a].toLowerCase()) !== -1) {
         console.log("hooray"); 
         filterItem(item); 
       }

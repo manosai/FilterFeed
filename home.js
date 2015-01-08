@@ -35,10 +35,13 @@ $(document).ready(function() {
 					word_list.push(data.words[i]); 
 				}
 			}
-			word_list.push(word); 
-			// add the word to local storage
-			chrome.storage.local.set({'words': word_list}); 
-			console.log("we just added a word"); 
+			// if the word doesn't already exist 
+			if (word_list.indexOf(word.toLowerCase()) == -1) {
+				word_list.push(word); 
+				// add the word to local storage
+				chrome.storage.local.set({'words': word_list}); 
+				console.log("we just added a word"); 
+			}
 		}); 
 
 		// display the added words in the popup 
@@ -46,9 +49,12 @@ $(document).ready(function() {
 		var ul = $("#navlist"); 
 		// adding additional keywords 
 		if (ul.length) {
-			html += "<li>" + word + "</li>"; 
-			console.log(word); 
-			$("#keyword_list ul").append(html); 
+			var matches = $( 'ul#navlist' ).find( 'li:contains('+ word +') ' ); 
+			if (!matches.length) {
+				html += "<li>" + word + "</li>"; 
+				console.log(word); 
+				$("#keyword_list ul").append(html); 
+			}
 		}
 		// adding the first keyword
 		else {

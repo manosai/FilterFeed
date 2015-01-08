@@ -10,11 +10,11 @@ function filterfeed(){
 
   }
 
-  // be a buzz kill on people's walls
-  wall_posts = document.getElementsByClassName("fbTimelineUnit");
+  // collect posts on people's walls
+  wall_posts = document.getElementsByClassName("_5pcb _4b0l");
   for(var i=0; i < wall_posts.length; i++){
     var post = wall_posts[i];
-    killLinks(post, "wall");
+    filter(post, "wall");
   }
 }
 
@@ -45,7 +45,7 @@ function filterItem(item){
     console.log("Just filtered" + item); 
     filtered_stories.push(item);
   }
-
+  console.log(filtered_stories.length); 
 }
 
 // begin function call

@@ -9,6 +9,23 @@ chrome.runtime.onInstalled.addListener(function() {
     var title = "Filter %s from news feed";
     var id = chrome.contextMenus.create({"title": title, "contexts":[context], "id":"context" + context}); 
 });
+
+// add a listener for the right click event
+chrome.contextMenus.onClicked.addListener(function (info, tab) {
+    var text = info.selectionText; 
+    var word_list = []; 
+        chrome.storage.local.get('words', function(data) {
+            if (!$.isEmptyObject(data)) {
+                for (i = 0; i < data.words.length; i++) { 
+                    word_list.push(data.words[i]); 
+                }
+            }
+            word_list.push(text); 
+            // add the word to local storage
+            chrome.storage.local.set({'words': word_list}); 
+}; 
+
+
 // Listen for any changes to the URL of any tab.
 // see: http://developer.chrome.com/extensions/tabs.html#event-onUpdated
 chrome.tabs.onUpdated.addListener(function(id, info, tab){

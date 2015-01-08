@@ -4,12 +4,13 @@ $(document).ready(function() {
 	chrome.storage.local.get('words', function(data) {
 		// words exist
 		if (!$.isEmptyObject(data)) {
+
+			// display the words in the popup
 			var word_list =[]; 
 			for (i = 0; i < data.words.length; i++) { 
 				word_list.push(data.words[i]); 
 			}
-			console.log(word_list); 
-			var counter = 0;  
+			console.log(word_list);   
 			var html = ""; 
 			$("#keyword_list").append("<ul id='navlist'></ul>");
 			for (i = 0; i < data.words.length; i++) {
@@ -18,6 +19,7 @@ $(document).ready(function() {
 				 
 			}
 			$("#keyword_list ul").append(html);
+
 		}
 	}); 
 

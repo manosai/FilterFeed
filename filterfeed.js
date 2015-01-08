@@ -1,4 +1,5 @@
 var filtered_stories = [];
+var word_list = []; 
 
 function filterfeed(){
 
@@ -18,20 +19,47 @@ function filterfeed(){
   }
 }
 
-function filter(item, pageType){
-
-  // statuses with no links
-  var status_content= item.getElementsByTagName("p");
-  for(var k=0; k < status_content.length; k++){
-    var current_status = status_content[k];
-    // var href = status.href.toLowerCase();
-
-    // search for a keyword match
-    if (current_status.innerText.indexOf("Foster Farms") !== -1) {
-      console.log("do we get here"); 
-      filterItem(item); 
+function finalFilter(data, status_list, item) {
+  for (i = 0; i < data.words.length; i++) { 
+    word_list.push(data.words[i]); 
+  }     
+  for (a = 0; a < data.words.length; a++) {
+    for (b = 0; b < status_list.length; b++) {
+      if (status_list[b].indexOf(data.words[a]) !== -1) {
+        console.log("hooray"); 
+        filterItem(item); 
+      }
     }
   }
+}
+
+function filter(item, pageType){
+
+  // statuses with no links, store in list
+  var status_content= item.getElementsByTagName("p");
+  var status_list = []; 
+  for(var k=0; k < status_content.length; k++){
+    var current_status = status_content[k].innerText; 
+    status_list.push(current_status); 
+  }
+    // get stored keywords and check for match
+   
+    chrome.storage.local.get('words', function(data) {
+      finalFilter(data, status_list, item); 
+    }); 
+
+    
+    /*
+      for (i = 0; i < data.words.length; i++) { 
+          console.log(data.words[i]); 
+          console.log(current_status); 
+          if (current_status.indexOf(data.words[i]) !== -1) {
+            console.log("hooray"); 
+            filterItem(item); 
+          }
+      }
+    }); 
+*/
 }
 
 function filterItem(item){

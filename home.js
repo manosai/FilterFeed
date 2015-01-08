@@ -1,5 +1,6 @@
 
 $(document).ready(function() {
+    
 	// check if there are already words in local storage, then display them
 	chrome.storage.local.get('words', function(data) {
 		// words exist
@@ -15,13 +16,14 @@ $(document).ready(function() {
 			$("#keyword_list").append("<ul id='navlist'></ul>");
 			for (i = 0; i < data.words.length; i++) {
 				html += "<li>" + data.words[i] + "</li>"; 
-				console.log(data.words[i]); 
 				 
 			}
 			$("#keyword_list ul").append(html);
 
 		}
 	}); 
+
+
 
 	$("#submit_button").click(function (e) {
 		var word = $("#keywords").val(); 

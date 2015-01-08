@@ -49,7 +49,7 @@ $(document).ready(function() {
 		var ul = $("#navlist"); 
 		// adding additional keywords 
 		if (ul.length) {
-			var matches = $( 'ul#navlist' ).find( 'li:contains('+ word +') ' ); 
+			var matches = $( 'ul#navlist' ).find( 'li:contains('+ word.toLowerCase() +') ' ); 
 			if (!matches.length) {
 				html += "<li>" + word + "</li>"; 
 				console.log(word); 

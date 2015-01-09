@@ -1,5 +1,10 @@
 
 $(document).ready(function() {
+
+	$("#clear_button").click(function (e) {
+		console.log("we are clickin"); 
+		chrome.storage.local.clear(); 
+	});
     
 	// check if there are already words in local storage, then display them
 	chrome.storage.local.get('words', function(data) {
@@ -20,6 +25,12 @@ $(document).ready(function() {
 			}
 			$("#keyword_list ul").append(html);
 
+			// display a clear all button
+
+			var html = ""; 
+			html += "<div class='form-actions'><button type='button' class='btn btn-default' id='clear_button'>Clear All</button></div>"; 
+
+			$("#keyword_list").append(html);
 		}
 	}); 
 
@@ -66,7 +77,6 @@ $(document).ready(function() {
 		// clear the textbox
 		$("#keywords").val(''); 
 	}); 
-
 
 	// listen for enter keypress
 	$("#keywords").keyup(function(event){

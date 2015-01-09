@@ -19,11 +19,9 @@ chrome.tabs.onUpdated.addListener(function(id, info, tab){
 
     // decide if we're ready to inject content script
     if (tab.status !== "complete"){
-        console.log("not yet");
         return;
     }
     if (tab.url.toLowerCase().indexOf("facebook.com") === -1){
-        console.log("not here");
         return;
     }
 

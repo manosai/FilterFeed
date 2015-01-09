@@ -5,7 +5,6 @@
         <link rel="stylesheet" href="main.css">
         <style type="text/css">
              body {
-                width: 500px;
                 overflow: hidden;
              }
              p{
@@ -71,14 +70,28 @@
               list-style-type: none;
               padding-right: 20px;
               font-family: "HelveticaNeue-Medium";
+              font-size:30px;
               color: black;
               opacity: .5; 
+            }
+
+            input {
+              border: 0;
+              outline: 0;
+              background: transparent;
+              font-family: "HelveticaNeue-Medium";
+              color: white;
+              opacity:.9;
+              font-size:36px;
+              border-bottom: 2px solid white;
+              width: 250px;
+              margin-bottom: 20px;
             }
 
 
 
               body {
-                width: 500px;
+                width: 750px;
                 height: 100px;
                 overflow: hidden;
              }
@@ -101,14 +114,11 @@
     <body>
             <div class="pure-u-1 dashboard-piece dashboard-piece-bluebg" id="content1">
                 <div class="dashboard-content">
-                    <p class="dashboard-metric tighterDash lowerDash">Facebook FilterFeed</p>
+                    <p class="dashboard-metric tighterDash lowerDash" style="font-size:48">Facebook FilterFeed</p>
                     <div class="col-lg-6">
                       <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Enter your keywords here..." id="keywords"></input>
+                        <input type="text" placeholder="add a keyword" id="keywords" />
                       </div><!-- /input-group -->
-                      <div class="form-actions">
-                        <button type="button" class="btn btn-default" id="submit_button">Add Keyword</button>
-                      </div>
                     </div><!-- /.col-lg-6 -->
                     <div class="pure-u-1 dashboard-piece dashboard-piece-greenbg" id="keyword_list">
                       

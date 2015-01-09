@@ -16,6 +16,7 @@ $(document).ready(function() {
 	chrome.storage.local.get('words', function(data) {
 		// words exist
 		if (!$.isEmptyObject(data)) {
+			var counter = 0; 
 
 			// display the words in the popup
 			var word_list =[]; 
@@ -38,8 +39,18 @@ $(document).ready(function() {
 
 			$("#input_group").append(clear_html);
 			$("#keyword_list").css('display', 'block');
-		}
-		else {
+
+			// listen for a delete specific keyword click and handle
+			// the event
+			$('.x .close').on('click', function() {
+				counter++; 
+				var word = $(this).closest('.x').find('li')[0].innerText; 
+				$(this).closest('.x').remove(); 
+				if (counter == data.words.length) {
+					$("#keyword_list").css('display', 'none'); 
+					$("#navlist").remove(); 	
+				}
+			}); 
 
 		}
 	}); 

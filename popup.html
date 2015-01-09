@@ -128,12 +128,30 @@
                 opacity: .5; 
              }
 
+             .x {
+              position: relative;
+              display: inline-block;
+              margin-right: 10px;
+
+             }
+            
+            .x .close {
+              position: absolute;
+              top: 2px;
+              right: -2px;
+              z-index: 100;
+              cursor: pointer;
+              opacity: .2;
+              padding-right: 6px; 
+            }
+
+
          </style>
     </head>
     <body>
             <div class="pure-u-1 dashboard-piece dashboard-piece-bluebg" id="content1">
                 <div class="dashboard-content">
-                    <p class="dashboard-metric tighterDash lowerDash" style="font-size:36; letter-spacing: -1.75px;chrome">Facebook FilterFeed</p>
+                    <p class="dashboard-metric tighterDash lowerDash" style="font-size:50; letter-spacing: -1.1px;chrome">Facebook FilterFeed</p>
                       <img src="toolbar_icon.png" style="margin-left:auto; margin-right:auto">
                       <div class="input-group">
                         <input type="text" placeholder="add a keyword" id="keywords" style="float:left;" />

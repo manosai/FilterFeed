@@ -26,7 +26,7 @@ $(document).ready(function() {
 			var html = ""; 
 			$("#keyword_list").append("<ul id='navlist'></ul>");
 			for (i = 0; i < data.words.length; i++) {
-				html += "<li>" + data.words[i] + "</li>"; 
+				html += "<div class='x'><span class='close'>&#10006;</span><li>"+ data.words[i] + "</li></div>"; 
 				 
 			}
 			$("#keyword_list ul").append(html);
@@ -72,14 +72,14 @@ $(document).ready(function() {
 		if (ul.length) {
 			var matches = $( 'ul#navlist' ).find( 'li:contains('+ word.toLowerCase() +') ' ); 
 			if (!matches.length) {
-				html += "<li>" + word + "</li>"; 
+				html += "<div class='x'><span class='close'>&#10006;</span><li>"+ word + "</li></div>"; 
 				console.log(word); 
 				$("#keyword_list ul").append(html); 
 			}
 		}
 		// adding the first keyword
 		else {
-			html += "<ul id ='navlist'><li>" + word + "</li></ul>"; 
+			html += "<ul id ='navlist'><div class='x'><span class='close'>&#10006;</span><li>"+ word + "</li></div></ul>"; 
 			console.log(word); 
 			$("#keyword_list").append(html);
 		} 

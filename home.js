@@ -2,7 +2,6 @@
 $(document).ready(function() {
 
 	$("#clear_button").click(function (e) {
-		$("#keyword_list").remove(); 
 		console.log("we are clickin"); 
 		chrome.storage.local.clear(); 
 	});
@@ -32,6 +31,7 @@ $(document).ready(function() {
 			clear_html += "<input type='text' placeholder='clear keywords' id='clear'/>"; 
 
 			$("#input_group").append(clear_html);
+			$("#keyword_list").css('display', 'block');
 		}
 	}); 
 
@@ -52,10 +52,10 @@ $(document).ready(function() {
 				// add the word to local storage
 				chrome.storage.local.set({'words': word_list}); 
 				console.log("we just added a word"); 
-			}
+			} 
 		});
-
-
+		
+		$("#keyword_list").css('display', 'block');
 		// display the added words in the popup 
 		var html = ""; 
 		var ul = $("#navlist"); 

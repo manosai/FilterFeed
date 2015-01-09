@@ -147,6 +147,8 @@ textarea {
 }
 .dashboard-piece-greenbg {
     background-color: #6EDACB;
+    padding-top: 10px;
+    margin-bottom: 30px;
 }
 .dashboard-piece-yellowbg {
     background-color: #E7E737;

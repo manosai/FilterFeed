@@ -137,7 +137,7 @@ textarea {
     color: #fff;
     text-align: center;
     position: relative;
-    padding-bottom: 0px;
+    padding-bottom: 20px;
 }
 .dashboard-piece-redbg {
     background-color: #E73F3F;
@@ -153,6 +153,8 @@ textarea {
 }
 .dashboard-piece-bluebg {
     background-color: #3b5998;
+    display:block;
+     height:350px; 
 }
 .dashboard-piece-purplebg {
     background-color: #7E45D3;
@@ -174,7 +176,7 @@ textarea {
 .dashboard-content {
     position: relative;
     z-index: 999;
-    padding-bottom:45px;
+    padding-bottom:0px;
 }
 .dashboard-content p {
     font-weight: lighter;
@@ -231,7 +233,7 @@ textarea {
 .pure-table-dark { color: #ddd; }
 .pure-table-dark .pure-table-odd { color: #444; }
 .weather {
-    padding-top: 60px;
+    padding-top: 0px;
 }
 footer {
     background: rgb(216, 223, 234);

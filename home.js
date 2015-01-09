@@ -1,9 +1,15 @@
 
 $(document).ready(function() {
 
-	$("#clear_button").click(function (e) {
+	$("#clear").click(function (e) {
 		console.log("we are clickin"); 
 		chrome.storage.local.clear(); 
+		var current_height = $("#keyword_list").height(); 
+		$("#keyword_list").css('display', 'none'); 
+		$("#navlist").remove(); 
+		var old_height = $("#content1").height(); 
+		var sum = current_height + old_height; 
+		//$("#content1").css('height', sum); 
 	});
     
 	// check if there are already words in local storage, then display them
@@ -33,6 +39,9 @@ $(document).ready(function() {
 			$("#input_group").append(clear_html);
 			$("#keyword_list").css('display', 'block');
 		}
+		else {
+
+		}
 	}); 
 
 
@@ -54,7 +63,7 @@ $(document).ready(function() {
 				console.log("we just added a word"); 
 			} 
 		});
-		
+
 		$("#keyword_list").css('display', 'block');
 		// display the added words in the popup 
 		var html = ""; 

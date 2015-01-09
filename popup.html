@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
@@ -70,7 +71,7 @@
               list-style-type: none;
               padding-right: 20px;
               font-family: "HelveticaNeue-Medium";
-              font-size:16px;
+              font-size:26px;
               color: black;
               opacity: .5; 
             }
@@ -82,9 +83,9 @@
               font-family: "HelveticaNeue-Medium";
               color: white;
               opacity:.9;
-              font-size:20px;
+              font-size:26px;
               border-bottom: 4px solid white;
-              width: 123px;
+              width: 162px;
               margin-bottom: 40px;
               letter-spacing: -1.31px;
             }
@@ -109,6 +110,23 @@
                 margin-right: auto;
                 width:75%;
              }
+             .clear {
+              background:none;
+              font-family: "HelveticaNeue-Medium";
+              letter-spacing: -1.31px;
+              color: black;
+              opacity:.7;
+              font-size:26px;
+              border:none;
+              margin:0;
+              padding:0;
+              float: right;
+             }
+
+             .clear:hover {
+                background-color:gray;
+                opacity: .5; 
+             }
 
          </style>
     </head>
@@ -118,7 +136,8 @@
                     <p class="dashboard-metric tighterDash lowerDash" style="font-size:36; letter-spacing: -1.75px;chrome">Facebook FilterFeed</p>
                       <img src="toolbar_icon.png" style="margin-left:auto; margin-right:auto">
                       <div class="input-group">
-                        <input type="text" placeholder="add a keyword" id="keywords" />
+                        <input type="text" placeholder="add a keyword" id="keywords" style="float:left;" />
+                        <button class="clear" id="clear">clear keywords</button>
                       </div><!-- /input-group -->
                     <div class="pure-u-1 dashboard-piece dashboard-piece-greenbg" id="keyword_list" style="display:none; min-height:50px">
                       

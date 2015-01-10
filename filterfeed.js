@@ -11,7 +11,7 @@ function filterfeed(){
 
   }
 
-  // collect posts on people's walls
+  // collect links and posts on people's walls
   var wall_posts = document.getElementsByClassName("_4-u2 mbm _5jmm _5pat _5v3q");
   for(var i=0; i < wall_posts.length; i++){
     var post = wall_posts[i];
@@ -24,6 +24,7 @@ function filterfeed(){
     var link = links[i]; 
     filter(link, "link"); 
   }
+
 }
 
 function finalFilter(status_list, link_content_list, link_header_list, item) {
@@ -71,9 +72,22 @@ function filter(item, contentType){
       var current_status = status_content[k].innerText; 
       status_list.push(current_status); 
     }
+    var wall_link_content = item.getElementsByClassName("_6m3"); 
+    var wall_link_header_tags = item.getElementsByClassName("mbs _6m6'");
+    for (var k = 0; k < wall_link_content.length; k++) {
+      var current_wall_link_content = wall_link_content[k].innerText; 
+      link_content_list.push(current_wall_link_content); 
+    }
+    for (var k = 0; k < wall_link_header_tags.length; k++) {
+      var current_wall_link_headers= wall_link_header_tags[k].getElementsByTagName("a");
+      for (var l = 0; l < current_wall_link_headers.length; l++) {
+        var current_wall_link_header = current_wall_link_headers[l].innerText; 
+         link_header_list.push(current_wall_link_header); 
+      } 
+    }
   }
   else if (contentType == "link") {
-    var link_content = item.getElementsByClassName("_6ma"); 
+    var link_content = item.getElementsByClassName("_6m3"); 
     var link_header_tags = item.getElementsByClassName("mbs _6m6'");
 
     for (var k = 0; k < link_content.length; k++) {
@@ -81,7 +95,7 @@ function filter(item, contentType){
       link_content_list.push(current_link_content); 
     }
     for (var k = 0; k < link_header_tags.length; k++) {
-      var current_link_headers= link_header_tags[0].getElementsByTagName("a");
+      var current_link_headers= link_header_tags[k].getElementsByTagName("a");
       for (var l = 0; l < current_link_headers.length; l++) {
         var current_link_header = current_link_headers[l].innerText; 
          link_header_list.push(current_link_header); 
@@ -113,12 +127,8 @@ function filterItem(item){
   item.style.display = "None";
 
   // or remove that fucking div from the DOM
-  item.remove();
+  item.parentNode.removeChild(item);
   console.log(item.className); 
-  if (item.className == '_6m3')
-  if (item.parents('._4-u2 mbm _5jmm _5pat _5v3q').length) {
-    item.parents('._4-u2 mbm _5jmm _5pat _5v3q')[0].remove(); 
-  }
 
   //if the post happens to be a link on a wall, 
 

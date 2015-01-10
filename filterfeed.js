@@ -29,31 +29,30 @@ function filterfeed(){
 
 function finalFilter(status_list, link_content_list, link_header_list, item) {
   chrome.storage.local.get('words', function(data) {
-    if (data.length == 0) {
-      return; 
-    }
-    for (i = 0; i < data.words.length; i++) { 
-      word_list.push(data.words[i]); 
-    }     
-    for (a = 0; a < data.words.length; a++) {
-      for (b = 0; b < status_list.length; b++) {
-        if (status_list[b].toLowerCase().indexOf(data.words[a].toLowerCase()) !== -1) {
-          filterItem(item); 
+    if (!isEmpty(data)) {
+      for (i = 0; i < data.words.length; i++) { 
+        word_list.push(data.words[i]); 
+      }     
+      for (a = 0; a < data.words.length; a++) {
+        for (b = 0; b < status_list.length; b++) {
+          if (status_list[b].toLowerCase().indexOf(data.words[a].toLowerCase()) !== -1) {
+            filterItem(item); 
+          }
         }
       }
-    }
 
-    for (a = 0; a < data.words.length; a++) {
-      for (b = 0; b < link_content_list.length; b++) {
-        if (link_content_list[b].toLowerCase().indexOf(data.words[a].toLowerCase()) !== -1) {
-          filterItem(item); 
+      for (a = 0; a < data.words.length; a++) {
+        for (b = 0; b < link_content_list.length; b++) {
+          if (link_content_list[b].toLowerCase().indexOf(data.words[a].toLowerCase()) !== -1) {
+            filterItem(item); 
+          }
         }
       }
-    }
-    for (a = 0; a < data.words.length; a++) {
-      for (b = 0; b < link_header_list.length; b++) {
-        if (link_header_list[b].toLowerCase().indexOf(data.words[a].toLowerCase()) !== -1) { 
-          filterItem(item); 
+      for (a = 0; a < data.words.length; a++) {
+        for (b = 0; b < link_header_list.length; b++) {
+          if (link_header_list[b].toLowerCase().indexOf(data.words[a].toLowerCase()) !== -1) { 
+            filterItem(item); 
+          }
         }
       }
     }
@@ -127,10 +126,9 @@ function filterItem(item){
   item.style.display = "None";
 
   // or remove that fucking div from the DOM
-  item.parentNode.removeChild(item);
-  console.log(item.className); 
-
-  //if the post happens to be a link on a wall, 
+  if (item.parentNode != null) {
+    item.parentNode.removeChild(item);
+  }
 
 
   // add this story to the list of killed stories
@@ -138,6 +136,29 @@ function filterItem(item){
     console.log("Just filtered" + item.innerHTML); 
     filtered_stories.push(item);
   }
+}
+
+// Speed up calls to hasOwnProperty
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+function isEmpty(obj) {
+
+    // null and undefined are "empty"
+    if (obj == null) return true;
+
+    // Assume if it has a length property with a non-zero value
+    // that that property is correct.
+    if (obj.length > 0)    return false;
+    if (obj.length === 0)  return true;
+
+    // Otherwise, does it have any properties of its own?
+    // Note that this doesn't handle
+    // toString and valueOf enumeration bugs in IE < 9
+    for (var key in obj) {
+        if (hasOwnProperty.call(obj, key)) return false;
+    }
+
+    return true;
 }
 
 // begin function call

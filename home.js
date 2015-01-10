@@ -2,7 +2,6 @@
 $(document).ready(function() {
 
 	$("#clear").click(function (e) {
-		console.log("we are clickin"); 
 		chrome.storage.local.clear(); 
 		var current_height = $("#keyword_list").height(); 
 		$("#keyword_list").css('display', 'none'); 
@@ -11,12 +10,34 @@ $(document).ready(function() {
 		var sum = current_height + old_height; 
 		//$("#content1").css('height', sum); 
 	});
+
+	function deleteWord(keyword, current_words) {
+		// delete from DB
+		chrome.storage.local.clear(); 
+		var new_word_list = []; 
+		for (i = 0; i < current_words.words.length; i++) {
+			if (keyword != current_words.words[i]) {
+				new_word_list.push(current_words.words[i]); 
+			}
+			else {
+				console.log("we just deleted a word"); 
+			}
+		}
+		console.log(new_word_list); 
+		chrome.storage.local.set({'words': new_word_list}); 
+
+		// words no longer exist
+		if (!new_word_list.length) {
+			$("#keyword_list").css('display', 'none'); 
+			$("#navlist").remove(); 
+		}	
+	}
     
 	// check if there are already words in local storage, then display them
 	chrome.storage.local.get('words', function(data) {
+		var del_data = []; 
 		// words exist
-		if (!$.isEmptyObject(data)) {
-			var counter = 0; 
+		if (data.words.length != 0) {
 
 			// display the words in the popup
 			var word_list =[]; 
@@ -40,18 +61,48 @@ $(document).ready(function() {
 			$("#input_group").append(clear_html);
 			$("#keyword_list").css('display', 'block');
 
+			
 			// listen for a delete specific keyword click and handle
 			// the event
-			$('.x .close').on('click', function() {
-				counter++; 
+			$('.x .close').on('click', function() { 
+				chrome.storage.local.clear(); 
 				var word = $(this).closest('.x').find('li')[0].innerText; 
-				$(this).closest('.x').remove(); 
-				if (counter == data.words.length) {
-					$("#keyword_list").css('display', 'none'); 
-					$("#navlist").remove(); 	
-				}
-			}); 
 
+				// remove the elements from DOM
+				$(this).closest('.x').remove(); 
+				var new_word_list = []; 
+				// if it's the first time, we're deleting a word since clicking
+				if (del_data.length == 0) {
+					for (i = 0; i < data.words.length; i++) {
+						if (word != data.words[i]) {
+							new_word_list.push(data.words[i]); 
+						}
+					}
+					del_data = new_word_list; 
+					console.log(del_data);
+					console.log(new_word_list); 
+				}
+				else {
+					for (i = 0; i < del_data.length; i++) {
+						if (word != del_data[i]) {
+							new_word_list.push(del_data[i]); 
+						}
+						console.log(new_word_list); 
+					}
+				}
+				if (!$('.x').length) {
+					$("#keyword_list").css('display', 'none'); 
+					$("#navlist").remove(); 
+				}
+				chrome.storage.local.set({'words': new_word_list}); 
+			});
+			
+			
+		}
+		else {
+			$("#keyword_list").css('display', 'none'); 
+			$("#navlist").remove(); 
+			
 		}
 	}); 
 
@@ -61,6 +112,7 @@ $(document).ready(function() {
 		console.log(word); 
 		var word_list = []; 
 		chrome.storage.local.get('words', function(data) {
+			var del_data = []; 
 			if (!$.isEmptyObject(data)) {
 				for (i = 0; i < data.words.length; i++) { 
 					word_list.push(data.words[i]); 
@@ -73,6 +125,42 @@ $(document).ready(function() {
 				chrome.storage.local.set({'words': word_list}); 
 				console.log("we just added a word"); 
 			} 
+
+			// listen for a delete specific keyword click and handle
+			// the event
+			$('.x .close').on('click', function() {
+				chrome.storage.local.clear(); 
+				var word = $(this).closest('.x').find('li')[0].innerText; 
+
+				// remove the elements from DOM
+				$(this).closest('.x').remove(); 
+				var new_word_list = []; 
+				console.log(word_list); 
+				// if it's the first time, we're deleting a word since clicking
+				if (del_data.length == 0) {
+					for (i = 0; i < word_list.length; i++) {
+						if (word != word_list[i]) {
+							new_word_list.push(word_list[i]); 
+						}
+					}
+					del_data = new_word_list; 
+				}
+				else {
+					for (i = 0; i < del_data.length; i++) {
+						if (word != del_data[i]) {
+							new_word_list.push(del_data[i]); 
+						}
+					}
+				}
+				
+				if (!$('.x').length) {
+					$("#keyword_list").css('display', 'none'); 
+					$("#navlist").remove(); 
+				}
+				
+				chrome.storage.local.set({'words': new_word_list}); 
+			});
+
 		});
 
 		$("#keyword_list").css('display', 'block');
@@ -90,13 +178,15 @@ $(document).ready(function() {
 		}
 		// adding the first keyword
 		else {
-			html += "<ul id ='navlist'><div class='x'><span class='close'>&#10006;</span><li>"+ word + "</li></div></ul>"; 
+			html += "<ul id ='navlist'><div class='x' id ='delete'><span class='close'>&#10006;</span><li>"+ word + "</li></div></ul>"; 
 			console.log(word); 
 			$("#keyword_list").append(html);
 		} 
 
 		// clear the textbox
 		$("#keywords").val(''); 
+
+
 	} 
 
 	// listen for enter keypress

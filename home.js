@@ -78,23 +78,22 @@ $(document).ready(function() {
 							new_word_list.push(data.words[i]); 
 						}
 					}
-					del_data = new_word_list; 
-					console.log(del_data);
-					console.log(new_word_list); 
+					del_data = new_word_list;  
 				}
 				else {
+					var output = []; 
 					for (i = 0; i < del_data.length; i++) {
 						if (word != del_data[i]) {
-							new_word_list.push(del_data[i]); 
+							output.push(del_data[i]); 
 						}
-						console.log(new_word_list); 
 					}
+					del_data = output; 
 				}
 				if (!$('.x').length) {
 					$("#keyword_list").css('display', 'none'); 
 					$("#navlist").remove(); 
 				}
-				chrome.storage.local.set({'words': new_word_list}); 
+				chrome.storage.local.set({'words': output}); 
 			});
 			
 			
@@ -135,30 +134,30 @@ $(document).ready(function() {
 				// remove the elements from DOM
 				$(this).closest('.x').remove(); 
 				var new_word_list = []; 
-				console.log(word_list); 
 				// if it's the first time, we're deleting a word since clicking
 				if (del_data.length == 0) {
-					for (i = 0; i < word_list.length; i++) {
-						if (word != word_list[i]) {
-							new_word_list.push(word_list[i]); 
+					for (i = 0; i < data.words.length; i++) {
+						if (word != data.words[i]) {
+							new_word_list.push(data.words[i]); 
 						}
 					}
-					del_data = new_word_list; 
+					del_data = new_word_list;  
 				}
 				else {
+					var output = []; 
 					for (i = 0; i < del_data.length; i++) {
 						if (word != del_data[i]) {
-							new_word_list.push(del_data[i]); 
+							output.push(del_data[i]); 
 						}
 					}
+					del_data = output; 
 				}
-				
 				if (!$('.x').length) {
 					$("#keyword_list").css('display', 'none'); 
 					$("#navlist").remove(); 
 				}
 				
-				chrome.storage.local.set({'words': new_word_list}); 
+				chrome.storage.local.set({'words': output}); 
 			});
 
 		});

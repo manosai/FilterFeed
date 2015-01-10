@@ -12,7 +12,7 @@ function filterfeed(){
   }
 
   // collect posts on people's walls
-  var wall_posts = document.getElementsByClassName("_5pcb _4b0l");
+  var wall_posts = document.getElementsByClassName("_4-u2 mbm _5jmm _5pat _5v3q");
   for(var i=0; i < wall_posts.length; i++){
     var post = wall_posts[i];
     filter(post, "status");
@@ -26,40 +26,47 @@ function filterfeed(){
   }
 }
 
-function finalFilter(data, status_list, link_content_list, link_header_list, item) {
-  for (i = 0; i < data.words.length; i++) { 
-    word_list.push(data.words[i]); 
-  }     
-  for (a = 0; a < data.words.length; a++) {
-    for (b = 0; b < status_list.length; b++) {
-      if (status_list[b].toLowerCase().indexOf(data.words[a].toLowerCase()) !== -1) {
-        filterItem(item); 
+function finalFilter(status_list, link_content_list, link_header_list, item) {
+  chrome.storage.local.get('words', function(data) {
+    if (data.length == 0) {
+      return; 
+    }
+    for (i = 0; i < data.words.length; i++) { 
+      word_list.push(data.words[i]); 
+    }     
+    for (a = 0; a < data.words.length; a++) {
+      for (b = 0; b < status_list.length; b++) {
+        if (status_list[b].toLowerCase().indexOf(data.words[a].toLowerCase()) !== -1) {
+          filterItem(item); 
+        }
       }
     }
-  }
 
-  for (a = 0; a < data.words.length; a++) {
-    for (b = 0; b < link_content_list.length; b++) {
-      if (link_content_list[b].toLowerCase().indexOf(data.words[a].toLowerCase()) !== -1) {
-        filterItem(item); 
+    for (a = 0; a < data.words.length; a++) {
+      for (b = 0; b < link_content_list.length; b++) {
+        if (link_content_list[b].toLowerCase().indexOf(data.words[a].toLowerCase()) !== -1) {
+          filterItem(item); 
+        }
       }
     }
-  }
-  for (a = 0; a < data.words.length; a++) {
-    for (b = 0; b < link_header_list.length; b++) {
-      if (link_header_list[b].toLowerCase().indexOf(data.words[a].toLowerCase()) !== -1) { 
-        filterItem(item); 
+    for (a = 0; a < data.words.length; a++) {
+      for (b = 0; b < link_header_list.length; b++) {
+        if (link_header_list[b].toLowerCase().indexOf(data.words[a].toLowerCase()) !== -1) { 
+          filterItem(item); 
+        }
       }
     }
-  }
+  });
 }
 
 function filter(item, contentType){
+  var status_list = []; 
+  var link_content_list = []; 
+  var link_header_list = []; 
 
   // statuses
   if (contentType == "status") {
     var status_content= item.getElementsByTagName("p");
-    var status_list = []; 
     for(var k=0; k < status_content.length; k++){
       var current_status = status_content[k].innerText; 
       status_list.push(current_status); 
@@ -68,9 +75,7 @@ function filter(item, contentType){
   else if (contentType == "link") {
     var link_content = item.getElementsByClassName("_6ma"); 
     var link_header_tags = item.getElementsByClassName("mbs _6m6'");
-    
-    var link_content_list = []; 
-    var link_header_list = []; 
+
     for (var k = 0; k < link_content.length; k++) {
       var current_link_content = link_content[k].innerText; 
       link_content_list.push(current_link_content); 
@@ -84,10 +89,8 @@ function filter(item, contentType){
     }
   }
     // get stored keywords and check for match
-   
-    chrome.storage.local.get('words', function(data) {
-      finalFilter(data, status_list, link_content_list, link_header_list, item); 
-    }); 
+  finalFilter(status_list, link_content_list, link_header_list, item); 
+  }
 
     
     /*
@@ -101,7 +104,6 @@ function filter(item, contentType){
       }
     }); 
 */
-}
 
 function filterItem(item){
 
@@ -110,9 +112,20 @@ function filterItem(item){
   item.style.opacity = "0.0";
   item.style.display = "None";
 
+  // or remove that fucking div from the DOM
+  item.remove();
+  console.log(item.className); 
+  if (item.className == '_6m3')
+  if (item.parents('._4-u2 mbm _5jmm _5pat _5v3q').length) {
+    item.parents('._4-u2 mbm _5jmm _5pat _5v3q')[0].remove(); 
+  }
+
+  //if the post happens to be a link on a wall, 
+
+
   // add this story to the list of killed stories
   if (filtered_stories.indexOf(item) == -1){
-    console.log("Just filtered" + item); 
+    console.log("Just filtered" + item.innerHTML); 
     filtered_stories.push(item);
   }
 }

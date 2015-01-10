@@ -168,7 +168,7 @@ $(document).ready(function() {
 		var ul = $("#navlist"); 
 		// adding additional keywords 
 		if (ul.length) {
-			var matches = $( 'ul#navlist' ).find( 'li:contains('+ word.toLowerCase() +') ' ); 
+			var matches = $( 'ul#navlist' ).find( 'li:textEquals('+ word.toLowerCase() +') ' ); 
 			if (!matches.length) {
 				html += "<div class='x'><span class='close'>&#10006;</span><li>"+ word + "</li></div>"; 
 				console.log(word); 

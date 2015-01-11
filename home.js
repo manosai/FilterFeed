@@ -1,7 +1,11 @@
 
 $(document).ready(function() {
+	var counter = 0; 
 
 	$("#clear").click(function (e) {
+		$("img").remove(); 
+		var img_html = "<img src='inactive.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
+		$("#img").append(img_html); 
 		chrome.storage.local.clear(); 
 		var current_height = $("#keyword_list").height(); 
 		$("#keyword_list").css('display', 'none'); 
@@ -38,6 +42,11 @@ $(document).ready(function() {
 		var del_data = []; 
 		// words exist
 		if (data.words.length != 0) {
+
+			// change the logo to blue one
+			$("img").remove(); 
+			var img_html = "<img src='toolbar_icon.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
+			$("#img").append(img_html); 
 
 			// display the words in the popup
 			var word_list =[]; 
@@ -90,6 +99,9 @@ $(document).ready(function() {
 					del_data = output; 
 				}
 				if (!$('.x').length) {
+					$("img").remove(); 
+					var img_html = "<img src='inactive.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
+					$("#img").append(img_html); 
 					$("#keyword_list").css('display', 'none'); 
 					$("#navlist").remove(); 
 				}
@@ -99,6 +111,9 @@ $(document).ready(function() {
 			
 		}
 		else {
+			$("img").remove(); 
+			var img_html = "<img src='inactive.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
+			$("#img").append(img_html); 
 			$("#keyword_list").css('display', 'none'); 
 			$("#navlist").remove(); 
 			
@@ -108,6 +123,10 @@ $(document).ready(function() {
 
 
 	function addKeyword(word) {
+		counter++; 
+		$("img").remove(); 
+		var img_html = "<img src='toolbar_icon.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
+		$("#img").append(img_html); 
 		console.log(word); 
 		var word_list = []; 
 		chrome.storage.local.get('words', function(data) {
@@ -130,6 +149,15 @@ $(document).ready(function() {
 			$('.x .close').on('click', function() {
 				chrome.storage.local.clear(); 
 				var word = $(this).closest('.x').find('li')[0].innerText; 
+
+				if (counter == 1) {
+					$("#keyword_list").css('display', 'none'); 
+					$("#navlist").remove(); 
+					$("img").remove(); 
+					var img_html = "<img src='inactive.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
+					$("#img").append(img_html); 
+					counter = 0; 
+				}
 
 				// remove the elements from DOM
 				$(this).closest('.x').remove(); 
@@ -155,6 +183,10 @@ $(document).ready(function() {
 				if (!$('.x').length) {
 					$("#keyword_list").css('display', 'none'); 
 					$("#navlist").remove(); 
+					$("img").remove(); 
+					var img_html = "<img src='inactive.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
+					$("#img").append(img_html); 
+					counter = 0; 
 				}
 				
 				chrome.storage.local.set({'words': output}); 

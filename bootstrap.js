@@ -10,7 +10,7 @@ chrome.tabs.onUpdated.addListener(function(id, info, tab){
 
 
     // decide if we're ready to inject content script
-    if (tab.status !== "complete" && localStorage["existing_user"] == "true"){
+    if (tab.status !== "complete" && localStorage["existing_user"] == "true" && tab.url.toLowerCase().indexOf("facebook.com") != -1){
          // show the page action
         chrome.pageAction.show(tab.id);
 

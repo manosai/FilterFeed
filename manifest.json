@@ -23,6 +23,14 @@
     "persistent": false
   },
 
+  "content_scripts": [
+    {
+      "matches": ["https://www.facebook.com/*"],
+      "js": ["filterfeed.js"],
+      "run_at": "document_start"
+    }
+  ],
+
   "page_action": {
     "default_title": "FilterFeed",
     "default_icon": "toolbar_icon.png",

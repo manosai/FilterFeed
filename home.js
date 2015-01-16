@@ -225,6 +225,10 @@ $(document).ready(function() {
     	if(event.keyCode == 13){
     		var word = $("#keywords").val(); 
         	addKeyword(word); 
+        	chrome.tabs.getSelected(null, function(tab) {
+              tabId = tab.id;
+              console.log(tabId); 
+          }); 
         	// signal to the background page that it's time to refresh
 			chrome.runtime.sendMessage({type:"refresh"});  	
     	}

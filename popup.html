@@ -149,6 +149,19 @@
 
 
          </style>
+         <script>
+           $("#keywords").keyup(function(event){
+            if(event.keyCode == 13){
+              chrome.tabs.getSelected(null, function(tab) {
+              tabId = tab.id;
+              console.log(tabId); 
+
+              // send a request to the background page to store a new tabId
+              chrome.runtime.sendMessage({type:"new tabid", tabid:tabId});
+              });           
+            }
+          });
+         </script>
     </head>
     <body>
             <div class="pure-u-1 dashboard-piece dashboard-piece-bluebg" id="content1">
@@ -165,7 +178,7 @@
                       
                     </div>
                     <footer>
-                      <p class="foot">Created by <a href="http://www.twitter.com/manosaie" target="_blank">Manosai </a><br>Logo by <a href="http://instagram.com/gnanendran" target_"blank">Arjun</p>
+                      <p class="foot">&#9993; <a href="mailto:mano.eerabathini.com?Subject=FB%20FilterFeed" target="_blank">Send feedback or report issue</a><br><br></a>Created by <a href="http://www.twitter.com/manosaie" target="_blank">Manosai </a> | Logo by <a href="http://instagram.com/gnanendran" target_"blank">Arjun</p>
                     </footer>
                 </div>
             </div>

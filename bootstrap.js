@@ -25,6 +25,24 @@ chrome.tabs.onUpdated.addListener(function(id, info, tab){
 
 });
 
+// maintaining state in the background
+var tabId = null;
+
+// listening for new tabIds and refresh requests
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+
+        // if this is a store request, save the tabid
+        if(request.type == "new tabid") {
+            tabId = request.tabid;
+        }
+
+        // if this is a refresh request, refresh the tab if it has been set
+        else if(request.type == "refresh" && tabId !== null) {
+            chrome.tabs.reload(tabId);
+        }
+});
+
 // show the popup when the user clicks on the page action.
 chrome.pageAction.onClicked.addListener(function(tab) {
     chrome.pageAction.show(tab.id);

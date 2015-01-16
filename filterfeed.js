@@ -1,11 +1,6 @@
 var filtered_stories = [];
 var word_list = []; 
 
-document.addEventListener('beforeload', function(event) {
-        if (event.url.match(/facebook/)) {
-            event.preventDefault();
-        }
-    }, false);
 
 function filterfeed(){
 

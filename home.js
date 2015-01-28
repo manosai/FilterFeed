@@ -48,6 +48,7 @@ $(document).ready(function() {
 			var img_html = "<img src='toolbar_icon.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
 			$("#img").append(img_html); 
 
+
 			// display the words in the popup
 			var word_list =[]; 
 			for (i = 0; i < data.words.length; i++) { 
@@ -127,7 +128,9 @@ $(document).ready(function() {
 		$("img").remove(); 
 		var img_html = "<img src='toolbar_icon.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
 		$("#img").append(img_html); 
-		console.log(word); 
+		//chrome.pageAction.setIcon({path: 'toolbar_icon.png'});
+
+
 		var word_list = []; 
 		chrome.storage.local.get('words', function(data) {
 			var del_data = []; 
@@ -186,6 +189,7 @@ $(document).ready(function() {
 					$("img").remove(); 
 					var img_html = "<img src='inactive.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
 					$("#img").append(img_html); 
+					chrome.browserAction.setIcon({path: 'inactive.png'});
 					counter = 0; 
 				}
 				

@@ -33,7 +33,7 @@
 
   "page_action": {
     "default_title": "FilterFeed",
-    "default_icon": "toolbar_icon.png",
+    "default_icon": "inactive.png",
     "default_popup": "popup.html"
   }
 

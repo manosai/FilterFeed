@@ -14,9 +14,19 @@ chrome.tabs.onUpdated.addListener(function(id, info, tab){
          // show the page action
         chrome.pageAction.show(tab.id);
 
+        // figure out which icon to show 
+        chrome.storage.local.get('words', function(data) {
+            // words exist
+            if (data.words.length != 0) {
+                chrome.pageAction.setIcon({tabId: tab.id, path: {'38': 'toolbar_icon.png'}}); 
+            }
+            else {
+                chrome.pageAction.setIcon({tabId: tab.id, path: {'38': 'inactive.png'}});
+            }
+        }); 
         // inject the content script onto the page
         console.log("injecting content script");
-        chrome.tabs.executeScript(null, {"file": "filterfeed.js"});
+        chrome.tabs.executeScript(tab.id, {"file": "filterfeed.js"});
         return;
     }
     if (tab.url.toLowerCase().indexOf("facebook.com") === -1){
@@ -43,11 +53,6 @@ chrome.runtime.onMessage.addListener(
         }
 });
 
-// show the popup when the user clicks on the page action.
-chrome.pageAction.onClicked.addListener(function(tab) {
-    chrome.pageAction.show(tab.id);
-});
-
 // Speed up calls to hasOwnProperty
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
@@ -70,6 +75,7 @@ function isEmpty(obj) {
 
     return true;
 }
+
 
 // update the icon when the user's settings change
 // chrome.storage.onChanged.addListener(function(changes, areaName){

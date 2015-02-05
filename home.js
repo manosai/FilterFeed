@@ -2,6 +2,18 @@
 $(document).ready(function() {
 	var counter = 0; 
 
+	chrome.storage.local.get('words', function(data) {
+		// words exist
+		if (data.words.length != 0) {
+			chrome.tabs.query(
+			{currentWindow: true, active: true},
+			function (tabArray) {
+				chrome.pageAction.setIcon({tabId: tabArray[0].id, path: {'38': 'toolbar_icon.png'}}); 
+			}
+		)
+		}
+	});
+
 	$("#clear").click(function (e) {
 		$("img").remove(); 
 		var img_html = "<img src='inactive.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
@@ -12,6 +24,14 @@ $(document).ready(function() {
 		$("#navlist").remove(); 
 		var old_height = $("#content1").height(); 
 		var sum = current_height + old_height; 
+		
+		chrome.tabs.query(
+						{currentWindow: true, active: true},
+							function (tabArray) {
+							chrome.pageAction.setIcon({tabId: tabArray[0].id, path: {'38': 'inactive.png'}}); 
+						}
+		)
+		
 		//$("#content1").css('height', sum); 
 	});
 
@@ -34,6 +54,7 @@ $(document).ready(function() {
 		if (!new_word_list.length) {
 			$("#keyword_list").css('display', 'none'); 
 			$("#navlist").remove(); 
+
 		}	
 	}
     
@@ -105,6 +126,12 @@ $(document).ready(function() {
 					$("#img").append(img_html); 
 					$("#keyword_list").css('display', 'none'); 
 					$("#navlist").remove(); 
+					chrome.tabs.query(
+						{currentWindow: true, active: true},
+							function (tabArray) {
+							chrome.pageAction.setIcon({tabId: tabArray[0].id, path: {'38': 'inactive.png'}}); 
+						}
+					)
 				}
 				chrome.storage.local.set({'words': output}); 
 			});
@@ -117,18 +144,31 @@ $(document).ready(function() {
 			$("#img").append(img_html); 
 			$("#keyword_list").css('display', 'none'); 
 			$("#navlist").remove(); 
+			chrome.tabs.query(
+				{currentWindow: true, active: true},
+					function (tabArray) {
+						chrome.pageAction.setIcon({tabId: tabArray[0].id, path: {'38': 'inactive.png'}}); 
+					}
+			)
 			
 		}
 	}); 
 
 
-
+	
 	function addKeyword(word) {
+		console.log("added"); 
 		counter++; 
 		$("img").remove(); 
 		var img_html = "<img src='toolbar_icon.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
 		$("#img").append(img_html); 
-		//chrome.pageAction.setIcon({path: 'toolbar_icon.png'});
+		chrome.tabs.query(
+			{currentWindow: true, active: true},
+			function (tabArray) {
+				chrome.pageAction.setIcon({tabId: tabArray[0].id, path: {'38': 'toolbar_icon.png'}}); 
+			}
+		)
+		//chrome.pageAction.setIcon({tabId: tab, path: 'toolbar_icon.png'});
 
 
 		var word_list = []; 
@@ -150,6 +190,7 @@ $(document).ready(function() {
 			// listen for a delete specific keyword click and handle
 			// the event
 			$('.x .close').on('click', function() {
+				console.log("delete"); 
 				chrome.storage.local.clear(); 
 				var word = $(this).closest('.x').find('li')[0].innerText; 
 
@@ -159,6 +200,12 @@ $(document).ready(function() {
 					$("img").remove(); 
 					var img_html = "<img src='inactive.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
 					$("#img").append(img_html); 
+					chrome.tabs.query(
+						{currentWindow: true, active: true},
+						function (tabArray) {
+							chrome.pageAction.setIcon({tabId: tabArray[0].id, path: {'38': 'inactive.png'}}); 
+						}
+					)
 					counter = 0; 
 				}
 
@@ -189,7 +236,14 @@ $(document).ready(function() {
 					$("img").remove(); 
 					var img_html = "<img src='inactive.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
 					$("#img").append(img_html); 
-					chrome.browserAction.setIcon({path: 'inactive.png'});
+
+					chrome.tabs.query(
+						{currentWindow: true, active: true},
+						function (tabArray) {
+							chrome.pageAction.setIcon({tabId: tabArray[0].id, path: {'38': 'inactive.png'}}); 
+						}
+					)
+
 					counter = 0; 
 				}
 				
@@ -229,13 +283,36 @@ $(document).ready(function() {
     	if(event.keyCode == 13){
     		var word = $("#keywords").val(); 
         	addKeyword(word); 
-        	chrome.tabs.getSelected(null, function(tab) {
-              tabId = tab.id;
-              console.log(tabId); 
-          }); 
         	// signal to the background page that it's time to refresh
-			chrome.runtime.sendMessage({type:"refresh"});  	
+			//chrome.runtime.sendMessage({type:"refresh"});  	
     	}
 	});
+
+	function setDOMInfo(info) { 
+		var html = info.stories; 
+		if (html == 1) {
+			$("#keyword_list").append("<ul id='navlist'>" + html + " story has been filtered from your news feed. </ul>");
+		}
+		else if (html > 1) {
+			$("#keyword_list").append("<ul id='navlist'>" + html + " stories have been filtered from your news feed. </ul>");
+		}
+		
+	}
+
+	window.addEventListener('DOMContentLoaded', function() {
+		chrome.tabs.query({
+	        active: true,
+	        currentWindow: true
+    	}, function(tabs) {
+	        /* ...and send a request for the DOM info... */
+	        chrome.tabs.sendMessage(
+	                tabs[0].id,
+	                {from: 'home', subject: 'DOMInfo'},
+	                /* ...also specifying a callback to be called 
+	                 *    from the receiving end (content script) */
+	                setDOMInfo);
+    	});
+	}); 
+
 }); 
 

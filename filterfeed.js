@@ -1,7 +1,6 @@
 var filtered_stories = [];
 var word_list = []; 
 
-
 function filterfeed(){
   console.log("just once"); 
   // collect posts in news feed 
@@ -187,14 +186,16 @@ chrome.runtime.onMessage.addListener(function(msg, sender, response) {
 
 // begin function call
 document.addEventListener("DOMContentLoaded", filterfeed); 
- 
-var insertedNodes = [];
+
 var observer = new MutationObserver(function(mutations) {
  mutations.forEach(function(mutation) {
-   for (var i = 0; i < mutation.addedNodes.length; i++)
-     insertedNodes.push(mutation.addedNodes[i]);
+   filterfeed(); 
  })
 });
-observer.observe(document, { childList: true });
-console.log(insertedNodes);
+
+observer.observe(document.getElementById("stream_pagelet"), {
+  childList: true, 
+  subtree: true
+}); 
+
 //document.addEventListener("DOMNodeInserted", filterfeed);

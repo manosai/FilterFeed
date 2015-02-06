@@ -26,7 +26,7 @@
   "content_scripts": [
     {
       "matches": ["https://www.facebook.com/", "https://www.facebook.com/*"], 
-      "js": ["filterfeed.js"], 
+      "js": ["filterfeed.js", "jquery.js"], 
       "run_at": "document_start"
     }
   ],

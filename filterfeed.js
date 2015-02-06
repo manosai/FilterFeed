@@ -3,27 +3,28 @@ var word_list = [];
 
 
 function filterfeed(){
-
+  console.log("just once"); 
   // collect posts in news feed 
-  var stories = document.getElementsByClassName("_4ikz");
-  for(var i=0; i < stories.length; i++){
-    var story = stories[i];
-    filter(story, "status");
-
+  if (document.url == "https://www.facebook.com/") {
+    var stories = document.getElementsByClassName("_4ikz");
+    for(var i=0; i < stories.length; i++){
+      var story = stories[i];
+      filter(story, "status");
+    }
+    // collect link descriptions and headers in news feed
+    var links = document.getElementsByClassName("_6m3"); 
+    for (var i = 0; i < links.length; i++) {
+      var link = links[i]; 
+      filter(link, "link"); 
+    }
   }
-
-  // collect links and posts on people's walls
-  var wall_posts = document.getElementsByClassName("_4-u2 mbm _5jmm _5pat _5v3q");
-  for(var i=0; i < wall_posts.length; i++){
-    var post = wall_posts[i];
-    filter(post, "status");
-  }
-
-  // collect link descriptions and headers in news feed
-  var links = document.getElementsByClassName("_6m3"); 
-  for (var i = 0; i < links.length; i++) {
-    var link = links[i]; 
-    filter(link, "link"); 
+  else {
+    // collect links and posts on people's walls
+    var wall_posts = document.getElementsByClassName("_4-u2 mbm _5jmm _5pat _5v3q");
+    for(var i=0; i < wall_posts.length; i++){
+      var post = wall_posts[i];
+      filter(post, "status");
+    }
   }
 
 }
@@ -120,8 +121,6 @@ function filter(item, contentType){
 */
 
 function filterItem(item){
-
-  console.log("we filtered" + item); 
   // set the story to be invisible
   item.style.opacity = "0.0";
   item.style.display = "None";
@@ -134,8 +133,8 @@ function filterItem(item){
 
   // add this story to the list of killed stories
   if (filtered_stories.indexOf(item) == -1){
-    console.log("Just filtered" + item.innerHTML); 
     filtered_stories.push(item);
+    console.log("something was filtered"); 
   }
 }
 
@@ -178,7 +177,7 @@ chrome.runtime.onMessage.addListener(function(msg, sender, response) {
          *  should be equivalent to jquery's `$(...)`) */
         var domInfo = {
             stories: filtered_stories.length
-        };
+        }
         /* Directly respond to the sender (popup), 
          * through the specified callback */
         response(domInfo);
@@ -187,5 +186,15 @@ chrome.runtime.onMessage.addListener(function(msg, sender, response) {
 
 
 // begin function call
-filterfeed();
-document.addEventListener("scroll", filterfeed);
+document.addEventListener("DOMContentLoaded", filterfeed); 
+ 
+var insertedNodes = [];
+var observer = new MutationObserver(function(mutations) {
+ mutations.forEach(function(mutation) {
+   for (var i = 0; i < mutation.addedNodes.length; i++)
+     insertedNodes.push(mutation.addedNodes[i]);
+ })
+});
+observer.observe(document, { childList: true });
+console.log(insertedNodes);
+//document.addEventListener("DOMNodeInserted", filterfeed);

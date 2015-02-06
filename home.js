@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
 	var counter = 0; 
 
@@ -282,7 +281,9 @@ $(document).ready(function() {
 	$("#keywords").keyup(function(event){
     	if(event.keyCode == 13){
     		var word = $("#keywords").val(); 
-        	addKeyword(word); 
+    		if (word.length != 0) {
+    			addKeyword(word);
+    		} 
         	// signal to the background page that it's time to refresh
 			//chrome.runtime.sendMessage({type:"refresh"});  	
     	}

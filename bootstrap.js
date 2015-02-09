@@ -41,6 +41,7 @@ var tabId = null;
 // listening for new tabIds and refresh requests
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
+        console.log(request); 
 
         // if this is a store request, save the tabid
         if(request.type == "new tabid") {
@@ -49,6 +50,7 @@ chrome.runtime.onMessage.addListener(
 
         // if this is a refresh request, refresh the tab if it has been set
         else if(request.type == "refresh" && tabId !== null) {
+            console.log("refresh"); 
             chrome.tabs.reload(tabId);
         }
 });

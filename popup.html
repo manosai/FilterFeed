@@ -149,6 +149,19 @@
 
 
          </style>
+         <script>
++           $("#keywords").keyup(function(event){
++            if(event.keyCode == 13){
++              chrome.tabs.getSelected(null, function(tab) {
++              tabId = tab.id;
++              console.log(tabId); 
++
++              // send a request to the background page to store a new tabId
++              chrome.runtime.sendMessage({type:"refresh"}); 
++              });           
++            }
++          });
++         </script>
     </head>
     <body>
             <div class="pure-u-1 dashboard-piece dashboard-piece-bluebg" id="content1">

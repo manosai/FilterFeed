@@ -283,9 +283,13 @@ $(document).ready(function() {
     		var word = $("#keywords").val(); 
     		if (word.length != 0) {
     			addKeyword(word);
-    		} 
-        	// signal to the background page that it's time to refresh
-			//chrome.runtime.sendMessage({type:"refresh"});  	
+    			chrome.tabs.getSelected(null, function(tab) {
+		            tabId = tab.id;
+		            console.log(tabId); 
+		         }); 
+	        	// signal to the background page that it's time to refresh
+				chrome.runtime.sendMessage({type:"refresh"});  	
+    		}  	
     	}
 	});
 

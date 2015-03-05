@@ -131,9 +131,21 @@ function filterItem(item){
 
 
   // add this story to the list of killed stories
-  if (filtered_stories.indexOf(item) == -1){
-    filtered_stories.push(item);
-    console.log("something was filtered"); 
+  if (filtered_stories.indexOf("item") == -1) {
+    filtered_stories.push("item"); 
+    chrome.storage.local.get('num', function(data) {
+      // adding to the counter for the first time 
+      if ($.isEmptyObject(data)) {
+        console.log("do we ever get here"); 
+        chrome.storage.local.set({'num': 1});
+      }
+      else {
+        var new_value = data + 1; 
+        chrome.storage.local.set({'num': new_value}); 
+      }
+      console.log(data.num); 
+    });
+    console.log("something was filtered");
   }
 }
 
@@ -175,7 +187,7 @@ chrome.runtime.onMessage.addListener(function(msg, sender, response) {
          * (For your specific requirements `document.querySelectorAll(...)`
          *  should be equivalent to jquery's `$(...)`) */
         var domInfo = {
-            stories: filtered_stories.length
+            stories: 1 
         }
         /* Directly respond to the sender (popup), 
          * through the specified callback */

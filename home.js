@@ -17,6 +17,7 @@ $(document).ready(function() {
 		$("img").remove(); 
 		var img_html = "<img src='main_inactive.png' width='75px' height='72px' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
 		$("#img").append(img_html); 
+		$("#notifications").remove(); 
 		chrome.storage.local.clear(); 
 		var current_height = $("#keyword_list").height(); 
 		$("#keyword_list").css('display', 'none'); 
@@ -123,6 +124,7 @@ $(document).ready(function() {
 					$("img").remove(); 
 					var img_html = "<img src='main_inactive.png' width='75px' height='72px' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
 					$("#img").append(img_html); 
+					$("#notifications").remove(); 
 					$("#keyword_list").css('display', 'none'); 
 					$("#navlist").remove(); 
 					chrome.tabs.query(
@@ -141,6 +143,7 @@ $(document).ready(function() {
 			$("img").remove(); 
 			var img_html = "<img src='main_inactive.png' width='75px' height='72px' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
 			$("#img").append(img_html); 
+			$("#notifications").remove(); 
 			$("#keyword_list").css('display', 'none'); 
 			$("#navlist").remove(); 
 			chrome.tabs.query(
@@ -294,12 +297,15 @@ $(document).ready(function() {
 	});
 
 	function setDOMInfo(info) { 
-		var html = info.stories; 
+		var html = info.stories;  
+		console.log(info); 
+		console.log(info.stories); 
+		console.log(html); 
 		if (html == 1) {
-			$("#keyword_list").append("<ul id='navlist'>" + html + " story has been filtered from your news feed. </ul>");
+			$("#notifications").append("<i class='fa fa-newspaper-o fa-3x'><span class='red'>"+html+"</span></i> <div class='clear2'> story removed <br>from newsfeed </div><br>");
 		}
 		else if (html > 1) {
-			$("#keyword_list").append("<ul id='navlist'>" + html + " stories have been filtered from your news feed. </ul>");
+			$("#notifications").append("<i class='fa fa-newspaper-o fa-3x'><span class='red'>"+html+"</span></i> <div class='clear2'> stories removed <br>from newsfeed </div><br>");
 		}
 		
 	}

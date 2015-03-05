@@ -60,6 +60,13 @@ img {
     vertical-align: middle;
 }
 
+news {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
 /*
  * Remove default fieldset styles.
  */
@@ -147,7 +154,7 @@ textarea {
 }
 .dashboard-piece-greenbg {
     background-color: #6EDACB;
-    padding-top: 10px;
+    padding-top: 5px;
     margin-bottom: 46px;
 }
 .dashboard-piece-yellowbg {
@@ -250,6 +257,7 @@ footer {
     font-weight: bold;
     text-align: center;
     letter-spacing: -0.5px; 
+    padding-bottom: 10px;
 }
 .p foot {
     display: table-cell;

@@ -3,6 +3,7 @@
     <head>
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.1/pure-min.css">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="main.css">
         <style type="text/css">
              body {
@@ -44,7 +45,7 @@
 
              #content2 {
                 min-height:0px;
-                height: 220px;
+                height: 250px;
              }
 
              #logouttext {
@@ -74,8 +75,9 @@
               padding-right: 20px;
               font-family: "HelveticaNeue-Medium";
               font-size:26px;
-              color: black;
+              color: #22345B;
               opacity: .5; 
+               letter-spacing: -1.31px;
             }
 
             input {
@@ -112,17 +114,41 @@
                 margin-right: auto;
                 width:75%;
              }
+             .news {
+                display: block; 
+                margin-left: -95px;
+                margin-right: auto;
+                margin-top: -16px;
+                padding-bottom: 20px;
+             }
              .clear {
               background:none;
               font-family: "HelveticaNeue-Medium";
               letter-spacing: -1.31px;
-              color: black;
+              color: #22345B;
               opacity:.7;
               font-size:26px;
               border:none;
               margin:0;
               padding:0;
               float: right;
+             }
+
+             .clear2 {
+              background:none;
+              font-family: "HelveticaNeue-Medium";
+              letter-spacing: -1.31px;
+              color: #22345B;
+              opacity:.7;
+              font-size:20px;
+              border:none;
+              margin-top: -1px;
+              margin-right:120px;
+              margin-bottom: -50px; 
+              padding:0;
+              line-height: 22px; 
+              float: right;
+              text-align: justify;
              }
 
              .clear:hover {
@@ -146,39 +172,53 @@
               opacity: .2;
               padding-right: 6px; 
             }
+            .fa {
+              color: #22345B;
+              opacity: .75;
+            }
+
+            .fa .red {
+              position: absolute;
+              font-family: "HelveticaNeue-Bold";
+              padding-right:1px;
+              padding-top: 3px;
+              width: 25px;
+              height: 25px;
+              top: -7px;
+              right: -10px;
+              z-index: 100;
+              background: #EF2D33;
+              border: 1px solid rgba(0,0,0,0.50);
+              border-radius: 10px;
+              color: white;
+              font-size: 15px;
+              letter-spacing: -1.15px;
+            }
 
 
          </style>
-         <script>
-+           $("#keywords").keyup(function(event){
-+            if(event.keyCode == 13){
-+              chrome.tabs.getSelected(null, function(tab) {
-+              tabId = tab.id;
-+              console.log(tabId); 
-+
-+              // send a request to the background page to store a new tabId
-+              chrome.runtime.sendMessage({type:"refresh"}); 
-+              });           
-+            }
-+          });
-+         </script>
     </head>
     <body>
             <div class="pure-u-1 dashboard-piece dashboard-piece-bluebg" id="content1">
                 <div class="dashboard-content">
                     <p class="dashboard-metric tighterDash lowerDash" style="font-size:40px; letter-spacing: -1.1px;chrome;">Facebook FilterFeed</p>
                     <div id="img">
-                      <img src="inactive.png" style="margin-left:auto; margin-right:auto; margin-top:-25px;">
+                      <img src="main_inactive.png" width='75px' height='72px' style="margin-left:auto; margin-right:auto; margin-top:-25px;">
                     </div>
                       <div class="input-group">
                         <input type="text" placeholder="add a keyword" id="keywords" style="float:left;" />
-                        <button class="clear" id="clear">clear keywords</button>
+                        <button class="clear" id="clear">clear keywords</button> 
                       </div><!-- /input-group -->
-                    <div class="pure-u-1 dashboard-piece dashboard-piece-greenbg" id="keyword_list" style="display:none; min-height:50px">
-                      
+                      <div class="news">
+                        <i class="fa fa-newspaper-o fa-3x"><span class='red'>20</span></i>
+                        <div class="clear2"> stories removed <br>from newsfeed 
+                        </div>
+                        <br>
+                      </div>
+                    <div class="pure-u-1 dashboard-piece dashboard-piece-greenbg" id="keyword_list" style="display:none; min-height:50px">       
                     </div>
                     <footer>
-                      <p class="foot">&#9993; <a href="mailto:mano.eerabathini.com?Subject=FB%20FilterFeed" target="_blank">Send feedback or report issue</a><br><br></a>Created by <a href="http://www.twitter.com/manosaie" target="_blank">Manosai </a> | Logo by <a href="http://www.instagram.com/gnanendran" target_"blank">Arjun</p>
+                      <p class="foot">&#9993; <a href="mailto:mano.eerabathini.com?Subject=FB%20FilterFeed" target="_blank">Send feedback or report issue</a><br><br></a>Created by <a href="http://www.twitter.com/manosaie" target="_blank">Manosai </a> | Designed by <a href="http://www.instagram.com/gnanendran" target_"blank">Arjunan</p>
                     </footer>
                 </div>
             </div>

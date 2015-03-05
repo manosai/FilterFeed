@@ -15,7 +15,7 @@ $(document).ready(function() {
 
 	$("#clear").click(function (e) {
 		$("img").remove(); 
-		var img_html = "<img src='inactive.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
+		var img_html = "<img src='main_inactive.png' width='75px' height='72px' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
 		$("#img").append(img_html); 
 		chrome.storage.local.clear(); 
 		var current_height = $("#keyword_list").height(); 
@@ -65,7 +65,7 @@ $(document).ready(function() {
 
 			// change the logo to blue one
 			$("img").remove(); 
-			var img_html = "<img src='toolbar_icon.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
+			var img_html = "<img src='main_active.png' width='75px' height='72px' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
 			$("#img").append(img_html); 
 
 
@@ -121,7 +121,7 @@ $(document).ready(function() {
 				}
 				if (!$('.x').length) {
 					$("img").remove(); 
-					var img_html = "<img src='inactive.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
+					var img_html = "<img src='main_inactive.png' width='75px' height='72px' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
 					$("#img").append(img_html); 
 					$("#keyword_list").css('display', 'none'); 
 					$("#navlist").remove(); 
@@ -139,7 +139,7 @@ $(document).ready(function() {
 		}
 		else {
 			$("img").remove(); 
-			var img_html = "<img src='inactive.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
+			var img_html = "<img src='main_inactive.png' width='75px' height='72px' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
 			$("#img").append(img_html); 
 			$("#keyword_list").css('display', 'none'); 
 			$("#navlist").remove(); 
@@ -159,7 +159,7 @@ $(document).ready(function() {
 		console.log("added"); 
 		counter++; 
 		$("img").remove(); 
-		var img_html = "<img src='toolbar_icon.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
+		var img_html = "<img src='main_active.png' width='75px' height='72px' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
 		$("#img").append(img_html); 
 		chrome.tabs.query(
 			{currentWindow: true, active: true},
@@ -197,7 +197,7 @@ $(document).ready(function() {
 					$("#keyword_list").css('display', 'none'); 
 					$("#navlist").remove(); 
 					$("img").remove(); 
-					var img_html = "<img src='inactive.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
+					var img_html = "<img src='main_inactive.png' width='75px' height='72px' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
 					$("#img").append(img_html); 
 					chrome.tabs.query(
 						{currentWindow: true, active: true},
@@ -233,7 +233,7 @@ $(document).ready(function() {
 					$("#keyword_list").css('display', 'none'); 
 					$("#navlist").remove(); 
 					$("img").remove(); 
-					var img_html = "<img src='inactive.png' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
+					var img_html = "<img src='main_inactive.png' width='75px' height='72px' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
 					$("#img").append(img_html); 
 
 					chrome.tabs.query(

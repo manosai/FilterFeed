@@ -154,8 +154,9 @@ textarea {
 }
 .dashboard-piece-greenbg {
     background-color: #6EDACB;
-    padding-top: 5px;
-    margin-bottom: 46px;
+    padding-top:5px;
+    margin-top: -8px;
+    margin-bottom: 30px;
 }
 .dashboard-piece-yellowbg {
     background-color: #E7E737;
@@ -247,17 +248,17 @@ textarea {
 }
 footer {
     background: #D7DDEB;
-    padding-top:-5px; 
     color: black;
     bottom:0;
     position:fixed;
     width:100%;
-    height:65px;
+    height:44px;
     font-size: 0.75em;
     font-weight: bold;
     text-align: center;
     letter-spacing: -0.5px; 
-    padding-bottom: 10px;
+    font-family: Open Sans; 
+    vertical-align: middle;
 }
 .p foot {
     display: table-cell;

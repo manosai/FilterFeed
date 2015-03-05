@@ -296,34 +296,35 @@ $(document).ready(function() {
     	}
 	});
 
-	function setDOMInfo(info) { 
-		var html = info.stories;  
-		console.log(info); 
-		console.log(info.stories); 
-		console.log(html); 
-		if (html == 1) {
-			$("#notifications").append("<i class='fa fa-newspaper-o fa-3x'><span class='red'>"+html+"</span></i> <div class='clear2'> story removed <br>from newsfeed </div><br>");
-		}
-		else if (html > 1) {
-			$("#notifications").append("<i class='fa fa-newspaper-o fa-3x'><span class='red'>"+html+"</span></i> <div class='clear2'> stories removed <br>from newsfeed </div><br>");
-		}
+	function setDOMInfo() { 
+		chrome.storage.local.get('num', function(data) {
+			var html = data['num']; 
+			if (html == 1) {
+				$("#notifications").append("<i class='fa fa-newspaper-o fa-3x'><span class='red'>"+html+"</span></i> <div class='clear2'> story removed <br>from newsfeed </div><br>");
+			}
+			else if (html > 1) {
+				$("#notifications").append("<i class='fa fa-newspaper-o fa-3x'><span class='red'>"+html+"</span></i> <div class='clear2'> stories removed <br>from newsfeed </div><br>");
+			}
+		}); 
 		
 	}
+	window.addEventListener('DOMContentLoaded', setDOMInfo); 
 
-	window.addEventListener('DOMContentLoaded', function() {
-		chrome.tabs.query({
-	        active: true,
-	        currentWindow: true
-    	}, function(tabs) {
-	        /* ...and send a request for the DOM info... */
-	        chrome.tabs.sendMessage(
-	                tabs[0].id,
-	                {from: 'home', subject: 'DOMInfo'},
-	                /* ...also specifying a callback to be called 
-	                 *    from the receiving end (content script) */
-	                setDOMInfo);
-    	});
-	}); 
+	// window.addEventListener('DOMContentLoaded', function() {
+	// 	chrome.tabs.query({
+	//         active: true,
+	//         currentWindow: true
+ //    	}, function(tabs) {
+	//         /* ...and send a request for the DOM info... */
+	//         chrome.tabs.sendMessage(
+	//                 tabs[0].id,
+	//                 {from: 'home', subject: 'DOMInfo'},
+	//                 /* ...also specifying a callback to be called 
+	//                  *    from the receiving end (content script) */
+	//                 setDOMInfo);
+ //    	});
+	// }); 
+
 
 }); 
 

@@ -135,15 +135,17 @@ function filterItem(item){
     filtered_stories.push("item"); 
     chrome.storage.local.get('num', function(data) {
       // adding to the counter for the first time 
-      if ($.isEmptyObject(data)) {
+      if ($.isEmptyObject(data) || data['num'] == 0) {
         console.log("do we ever get here"); 
         chrome.storage.local.set({'num': 1});
+        console.log(1); 
       }
       else {
-        var new_value = data + 1; 
+        console.log(parseInt(data['num'])); 
+        var new_value = parseInt(data['num']) + 1; 
+        console.log(new_value); 
         chrome.storage.local.set({'num': new_value}); 
-      }
-      console.log(data.num); 
+      } 
     });
     console.log("something was filtered");
   }
@@ -195,9 +197,18 @@ chrome.runtime.onMessage.addListener(function(msg, sender, response) {
     }
 });
 
-
+function clear() { 
+  console.log("once it should clear"); 
+  chrome.storage.local.set({'num': 0}); 
+  chrome.storage.local.get('num', function(data) {
+      console.log(data['num']); 
+  }); 
+}
+//window.onload = clear(); 
 // begin function call
 document.addEventListener("DOMContentLoaded", filterfeed); 
+
+
 
 var observer = new MutationObserver(function(mutations) {
  mutations.forEach(function(mutation) {

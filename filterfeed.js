@@ -138,7 +138,7 @@ function filterItem(item){
       if ($.isEmptyObject(data) || data['num'] == 0) {
         console.log("do we ever get here"); 
         chrome.storage.local.set({'num': 1});
-        console.log(1); 
+        console.log("only 1 story in the DB"); 
       }
       else {
         console.log(parseInt(data['num'])); 
@@ -204,8 +204,8 @@ function clear() {
       console.log(data['num']); 
   }); 
 }
-//window.onload = clear(); 
-// begin function call
+window.addEventListener("beforeunload", clear); 
+
 document.addEventListener("DOMContentLoaded", filterfeed); 
 
 

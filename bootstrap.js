@@ -53,6 +53,11 @@ chrome.runtime.onMessage.addListener(
             console.log("refresh"); 
             chrome.tabs.reload(tabId);
         }
+        else if (request.type == "change") {
+            console.log("page change detected");
+            //chrome.tabs.executeScript(tabId, {"file": "filterfeed.js"});
+        }
+        
 });
 
 // Speed up calls to hasOwnProperty

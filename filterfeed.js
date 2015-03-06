@@ -2,7 +2,9 @@ var filtered_stories = [];
 var word_list = []; 
 
 function filterfeed(){
-  console.log("just once"); 
+  console.log("filter1"); 
+  
+
   // collect posts in news feed 
   if (document.url == "https://www.facebook.com/") {
     var stories = document.getElementsByClassName("_4ikz");
@@ -28,43 +30,11 @@ function filterfeed(){
 
 }
 
-function finalFilter(status_list, link_content_list, link_header_list, item) {
-  chrome.storage.local.get('words', function(data) {
-    if (!isEmpty(data)) {
-      for (i = 0; i < data.words.length; i++) { 
-        word_list.push(data.words[i]); 
-      }     
-      for (a = 0; a < data.words.length; a++) {
-        for (b = 0; b < status_list.length; b++) {
-          if (status_list[b].toLowerCase().indexOf(data.words[a].toLowerCase()) !== -1) {
-            filterItem(item); 
-          }
-        }
-      }
-
-      for (a = 0; a < data.words.length; a++) {
-        for (b = 0; b < link_content_list.length; b++) {
-          if (link_content_list[b].toLowerCase().indexOf(data.words[a].toLowerCase()) !== -1) {
-            filterItem(item); 
-          }
-        }
-      }
-      for (a = 0; a < data.words.length; a++) {
-        for (b = 0; b < link_header_list.length; b++) {
-          if (link_header_list[b].toLowerCase().indexOf(data.words[a].toLowerCase()) !== -1) { 
-            filterItem(item); 
-          }
-        }
-      }
-    }
-  });
-}
-
 function filter(item, contentType){
   var status_list = []; 
   var link_content_list = []; 
   var link_header_list = []; 
-
+  console.log("filter2"); 
   // statuses
   if (contentType == "status") {
     var status_content= item.getElementsByTagName("p");
@@ -106,6 +76,45 @@ function filter(item, contentType){
   finalFilter(status_list, link_content_list, link_header_list, item); 
   }
 
+function finalFilter(status_list, link_content_list, link_header_list, item) {
+  chrome.storage.local.get('words', function(data) {
+    if (!isEmpty(data)) {
+        console.log("filter3"); 
+        console.log(status_list);
+        console.log(link_content_list);
+        console.log(link_header_list);
+        console.log(item); 
+      for (i = 0; i < data.words.length; i++) { 
+        word_list.push(data.words[i]); 
+      }     
+      for (a = 0; a < data.words.length; a++) {
+        for (b = 0; b < status_list.length; b++) {
+          if (status_list[b].toLowerCase().indexOf(data.words[a].toLowerCase()) !== -1) {
+            filterItem(item); 
+          }
+        }
+      }
+
+      for (a = 0; a < data.words.length; a++) {
+        for (b = 0; b < link_content_list.length; b++) {
+          if (link_content_list[b].toLowerCase().indexOf(data.words[a].toLowerCase()) !== -1) {
+            filterItem(item); 
+          }
+        }
+      }
+      for (a = 0; a < data.words.length; a++) {
+        for (b = 0; b < link_header_list.length; b++) {
+          if (link_header_list[b].toLowerCase().indexOf(data.words[a].toLowerCase()) !== -1) { 
+            filterItem(item); 
+          }
+        }
+      }
+    }
+  }); 
+}
+
+
+
     
     /*
       for (i = 0; i < data.words.length; i++) { 
@@ -120,6 +129,7 @@ function filter(item, contentType){
 */
 
 function filterItem(item){
+    console.log("filter4"); 
   // set the story to be invisible
   item.style.opacity = "0.0";
   item.style.display = "None";
@@ -132,6 +142,7 @@ function filterItem(item){
 
   // add this story to the list of killed stories
   if (filtered_stories.indexOf("item") == -1) {
+    console.log(item); 
     filtered_stories.push("item"); 
     chrome.storage.local.get('num', function(data) {
       // adding to the counter for the first time 
@@ -181,21 +192,6 @@ chrome.runtime.sendMessage({
     subject: 'showPageAction'
 });
 
-/* Listen for message from the popup */
-chrome.runtime.onMessage.addListener(function(msg, sender, response) {
-    /* First, validate the message's structure */
-    if ((msg.from === 'home') && (msg.subject === 'DOMInfo')) {
-        /* Collect the necessary data 
-         * (For your specific requirements `document.querySelectorAll(...)`
-         *  should be equivalent to jquery's `$(...)`) */
-        var domInfo = {
-            stories: 1 
-        }
-        /* Directly respond to the sender (popup), 
-         * through the specified callback */
-        response(domInfo);
-    }
-});
 
 function clear() { 
   console.log("once it should clear"); 
@@ -204,21 +200,63 @@ function clear() {
       console.log(data['num']); 
   }); 
 }
-window.addEventListener("beforeunload", clear); 
+//window.addEventListener("beforeunload", function() {
 
-document.addEventListener("DOMContentLoaded", filterfeed); 
+//}); 
+
+document.addEventListener("DOMContentLoaded", function(){
+  console.log("the very first time the page loads"); 
+  //filterfeed(); 
+}); 
+
+
+function waitForLoad() {
+  document.addEventListener("load", function(){
+      console.log("wait for the page to finish loading"); 
+      filterfeed(); 
+  }); 
+}
+
+var old_URL = document.URL;
+var old_body = document.body; 
+var old_posts = document.getElementsByClassName("_4ikz");
+document.addEventListener("click", function(){
+  var new_URL = document.URL; 
+  if (old_URL != new_URL) {
+    setTimeout(function() {
+        filterfeed(); 
+    }, 1725); 
+  }
+
+});
 
 
 
 var observer = new MutationObserver(function(mutations) {
  mutations.forEach(function(mutation) {
-   filterfeed(); 
- })
+   //filterfeed(); 
+ });
 });
 
-observer.observe(document.getElementById("stream_pagelet"), {
-  childList: true, 
-  subtree: true
-}); 
+feed = document.getElementById("stream_pagelet"); 
+wall = document.getElementById("timeline_tab_content");
+if (feed != undefined) {
+  //console.log("we better see feed"); 
+  observer.observe(document.getElementById("stream_pagelet"), {
+    childList: true, 
+    subtree: true
+  });
+} else if (wall != undefined) {
+  //console.log("we better see wall"); 
+    observer.observe(document.getElementById("timeline_tab_content"), {
+    childList: true, 
+    subtree: true
+  }); 
+}
+ 
+
+
+
+
 
 //document.addEventListener("DOMNodeInserted", filterfeed);

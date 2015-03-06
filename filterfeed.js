@@ -218,7 +218,27 @@ document.addEventListener("click", function(){
   var new_URL = document.URL; 
   if (old_URL != new_URL) {
     setTimeout(function() {
-        filterfeed(); 
+        var observer = new MutationObserver(function(mutations) {
+           mutations.forEach(function(mutation) {
+           filterfeed(); 
+          });
+        });
+
+        feed = document.getElementById("stream_pagelet"); 
+        wall = document.getElementById("timeline_tab_content");
+        if (feed != undefined) {
+          //console.log("we better see feed"); 
+          observer.observe(document.getElementById("stream_pagelet"), {
+            childList: true, 
+            subtree: true
+          });
+        } else if (wall != undefined) {
+          //console.log("we better see wall"); 
+          observer.observe(document.getElementById("timeline_tab_content"), {
+            childList: true, 
+            subtree: true
+          }); 
+        }
         clear(); 
     }, 2000); 
   }

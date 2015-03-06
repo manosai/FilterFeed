@@ -206,16 +206,10 @@ function clear() {
 
 document.addEventListener("DOMContentLoaded", function(){
   console.log("the very first time the page loads"); 
-  //filterfeed(); 
+  filterfeed(); 
 }); 
 
 
-function waitForLoad() {
-  document.addEventListener("load", function(){
-      console.log("wait for the page to finish loading"); 
-      filterfeed(); 
-  }); 
-}
 
 var old_URL = document.URL;
 var old_body = document.body; 
@@ -225,7 +219,8 @@ document.addEventListener("click", function(){
   if (old_URL != new_URL) {
     setTimeout(function() {
         filterfeed(); 
-    }, 1725); 
+        clear(); 
+    }, 2000); 
   }
 
 });
@@ -234,7 +229,7 @@ document.addEventListener("click", function(){
 
 var observer = new MutationObserver(function(mutations) {
  mutations.forEach(function(mutation) {
-   //filterfeed(); 
+   filterfeed(); 
  });
 });
 

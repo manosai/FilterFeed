@@ -2,8 +2,6 @@ var filtered_stories = [];
 var word_list = []; 
 
 function filterfeed(){
-  console.log("filter1"); 
-  
 
   // collect posts in news feed 
   if (document.url == "https://www.facebook.com/") {
@@ -34,7 +32,6 @@ function filter(item, contentType){
   var status_list = []; 
   var link_content_list = []; 
   var link_header_list = []; 
-  console.log("filter2"); 
   // statuses
   if (contentType == "status") {
     var status_content= item.getElementsByTagName("p");
@@ -78,12 +75,7 @@ function filter(item, contentType){
 
 function finalFilter(status_list, link_content_list, link_header_list, item) {
   chrome.storage.local.get('words', function(data) {
-    if (!isEmpty(data)) {
-        console.log("filter3"); 
-        console.log(status_list);
-        console.log(link_content_list);
-        console.log(link_header_list);
-        console.log(item); 
+    if (!isEmpty(data)) { 
       for (i = 0; i < data.words.length; i++) { 
         word_list.push(data.words[i]); 
       }     
@@ -129,7 +121,6 @@ function finalFilter(status_list, link_content_list, link_header_list, item) {
 */
 
 function filterItem(item){
-    console.log("filter4"); 
   // set the story to be invisible
   item.style.opacity = "0.0";
   item.style.display = "None";
@@ -142,23 +133,18 @@ function filterItem(item){
 
   // add this story to the list of killed stories
   if (filtered_stories.indexOf("item") == -1) {
-    console.log(item); 
     filtered_stories.push("item"); 
     chrome.storage.local.get('num', function(data) {
       // adding to the counter for the first time 
       if ($.isEmptyObject(data) || data['num'] == 0) {
-        console.log("do we ever get here"); 
         chrome.storage.local.set({'num': 1});
-        console.log("only 1 story in the DB"); 
       }
       else {
-        console.log(parseInt(data['num'])); 
         var new_value = parseInt(data['num']) + 1; 
-        console.log(new_value); 
         chrome.storage.local.set({'num': new_value}); 
       } 
     });
-    console.log("something was filtered");
+    //console.log("something was filtered");
   }
 }
 
@@ -205,7 +191,6 @@ function clear() {
 //}); 
 
 document.addEventListener("DOMContentLoaded", function(){
-  console.log("the very first time the page loads"); 
   filterfeed(); 
 }); 
 
@@ -256,7 +241,6 @@ var observer = new MutationObserver(function(mutations) {
 feed = document.getElementById("stream_pagelet"); 
 wall = document.getElementById("timeline_tab_content");
 if (feed != undefined) {
-  //console.log("we better see feed"); 
   observer.observe(document.getElementById("stream_pagelet"), {
     childList: true, 
     subtree: true

@@ -190,7 +190,6 @@ function clear() {
 //}); 
 
 document.addEventListener("DOMContentLoaded", function(){
-  clear(); 
   filterfeed(); 
 }); 
 
@@ -205,7 +204,6 @@ document.addEventListener("click", function(){
     setTimeout(function() {
         var observer = new MutationObserver(function(mutations) {
            mutations.forEach(function(mutation) {
-            clear(); 
            filterfeed(); 
           });
         });
@@ -225,6 +223,7 @@ document.addEventListener("click", function(){
             subtree: true
           }); 
         }
+        clear(); 
     }, 2000); 
   }
 

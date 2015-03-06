@@ -193,6 +193,7 @@ function clear() {
 
 document.addEventListener("DOMContentLoaded", function(){
   filterfeed(); 
+  clear(); 
 }); 
 
 

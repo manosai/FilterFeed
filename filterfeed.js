@@ -138,9 +138,11 @@ function filterItem(item){
       // adding to the counter for the first time 
       if ($.isEmptyObject(data) || data['num'] == 0) {
         chrome.storage.local.set({'num': 1});
+        console.log("1"); 
       }
       else {
         var new_value = parseInt(data['num']) + 1; 
+        console.log(new_value); 
         chrome.storage.local.set({'num': new_value}); 
       } 
     });
@@ -202,6 +204,8 @@ document.addEventListener("click", function(){
   var new_URL = document.URL; 
   if (old_URL != new_URL) {
     setTimeout(function() {
+        clear(); 
+        filterfeed(); 
         var observer = new MutationObserver(function(mutations) {
            mutations.forEach(function(mutation) {
            filterfeed(); 
@@ -223,7 +227,6 @@ document.addEventListener("click", function(){
             subtree: true
           }); 
         }
-        clear(); 
     }, 2000); 
   }
 

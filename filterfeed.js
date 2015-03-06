@@ -234,7 +234,6 @@ document.addEventListener("click", function(){
 
 var observer = new MutationObserver(function(mutations) {
  mutations.forEach(function(mutation) {
-    clear(); 
    filterfeed(); 
  });
 });

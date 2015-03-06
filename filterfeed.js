@@ -180,10 +180,9 @@ chrome.runtime.sendMessage({
 
 
 function clear() { 
-  console.log("once it should clear"); 
   chrome.storage.local.set({'num': 0}); 
   chrome.storage.local.get('num', function(data) {
-      console.log(data['num']); 
+      //console.log(data['num']); 
   }); 
 }
 //window.addEventListener("beforeunload", function() {

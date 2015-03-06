@@ -138,11 +138,11 @@ function filterItem(item){
       // adding to the counter for the first time 
       if ($.isEmptyObject(data) || data['num'] == 0) {
         chrome.storage.local.set({'num': 1});
-        console.log("1"); 
+        //console.log("1"); 
       }
       else {
         var new_value = parseInt(data['num']) + 1; 
-        console.log(new_value); 
+        //console.log(new_value); 
         chrome.storage.local.set({'num': new_value}); 
       } 
     });

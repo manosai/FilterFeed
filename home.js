@@ -44,10 +44,10 @@ function deleteWord(keyword, current_words) {
 			new_word_list.push(current_words.words[i]); 
 		}
 		else {
-			console.log("we just deleted a word"); 
+			//console.log("we just deleted a word"); 
 		}
 	}
-	console.log(new_word_list); 
+	//console.log(new_word_list); 
 	chrome.storage.local.set({'words': new_word_list}); 
 
 	// words no longer exist
@@ -74,8 +74,7 @@ chrome.storage.local.get('words', function(data) {
 		var word_list =[]; 
 		for (i = 0; i < data.words.length; i++) { 
 			word_list.push(data.words[i]); 
-		}
-		console.log(word_list);   
+		} 
 		var html = ""; 
 		$("#keyword_list").append("<ul id='navlist'></ul>");
 		for (i = 0; i < data.words.length; i++) {
@@ -103,10 +102,10 @@ chrome.storage.local.get('words', function(data) {
 			chrome.storage.local.get('words', function(data) {
 				if (!$.isEmptyObject(data)) {
 					counter = data.words.length-1; 
-					console.log(counter); 
 					if (counter == 0) {
-						console.log("delete last word"); 
+						//console.log("delete last word"); 
 						$("#keyword_list").css('display', 'none'); 
+						$("#notifications").remove();
 						$("#navlist").remove(); 
 						$("img").remove(); 
 						var img_html = "<img src='main_inactive.png' width='75px' height='72px' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
@@ -120,7 +119,7 @@ chrome.storage.local.get('words', function(data) {
 						chrome.storage.local.clear(); 
 					}
 					else {
-						console.log("not the last word"); 
+						//console.log("not the last word"); 
 
 						var output = [];
 						for (i = 0; i < data.words.length; i++) {
@@ -182,23 +181,21 @@ function addKeyword(word) {
 			word_list.push(word); 
 			// add the word to local storage
 			chrome.storage.local.set({'words': word_list}); 
-			console.log("we just added a word"); 
+			//console.log("we just added a word"); 
 		} 
 
 		// listen for a delete specific keyword click and handle
 		// the event
 		$('.x .close').on('click', function() {
-			console.log("delete"); 
 			$(this).closest('.x').remove(); 
 			var word = $(this).closest('.x').find('li')[0].innerText; 
 			chrome.storage.local.get('words', function(data) {
 				if (!$.isEmptyObject(data)) {
-					counter = data.words.length-1; 
-					console.log(counter); 
+					counter = data.words.length-1;  
 					if (counter == 0) {
-						console.log("delete last word"); 
 						$("#keyword_list").css('display', 'none'); 
 						$("#navlist").remove(); 
+						$("#notifications").remove();
 						$("img").remove(); 
 						var img_html = "<img src='main_inactive.png' width='75px' height='72px' style='margin-left:auto; margin-right:auto; margin-top:-25px;'>"; 
 						$("#img").append(img_html); 
@@ -211,7 +208,7 @@ function addKeyword(word) {
 						chrome.storage.local.clear(); 
 					}
 					else {
-						console.log("not the last word"); 
+						//console.log("not the last word"); 
 
 						var output = [];
 						for (i = 0; i < data.words.length; i++) {
@@ -263,17 +260,18 @@ $("#keywords").keyup(function(event){
 			addKeyword(word);
 			chrome.tabs.getSelected(null, function(tab) {
 	            tabId = tab.id;
-	            console.log(tabId); 
+	            //console.log(tabId); 
 	         }); 
+			//chrome.storage.local.set({'num': 0}); 
         	// signal to the background page that it's time to refresh
 			chrome.runtime.sendMessage({type:"refresh"});  	
 		}  	
 	}
 });
 
-function setDOMInfo() { 
+function setDOMInfo() {  
 	chrome.storage.local.get('num', function(data) {
-		var html = data['num']; 
+		var html = data['num']; 	
 		if (html == 1) {
 			$("#notifications").append("<i class='fa fa-newspaper-o fa-3x'><span class='red'>"+html+"</span></i> <div class='clear2'> story removed <br>from newsfeed </div><br>");
 		}
@@ -284,6 +282,9 @@ function setDOMInfo() {
 	
 }
 window.addEventListener('DOMContentLoaded', setDOMInfo); 
+window.setInterval(function(){
+  setDOMInfo; 
+}, 1000);
 
 // window.addEventListener('DOMContentLoaded', function() {
 // 	chrome.tabs.query({

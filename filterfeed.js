@@ -2,9 +2,8 @@ var filtered_stories = [];
 var word_list = []; 
 
 function filterfeed(){
-
   // collect posts in news feed 
-  if (document.url == "https://www.facebook.com/") {
+  if (document.url == "https://www.facebook.com/" || document.url == "https://www.facebook.com/?ref=logo") { 
     var stories = document.getElementsByClassName("_4ikz");
     for(var i=0; i < stories.length; i++){
       var story = stories[i];
@@ -141,6 +140,7 @@ function filterItem(item){
         //console.log("1"); 
       }
       else {
+        //console.log("more than 1 story"); 
         var new_value = parseInt(data['num']) + 1; 
         //console.log(new_value); 
         chrome.storage.local.set({'num': new_value}); 
@@ -187,26 +187,54 @@ function clear() {
       //console.log(data['num']); 
   }); 
 }
-//window.addEventListener("beforeunload", function() {
 
-//}); 
+// grab the words before the refresh 
+chrome.storage.local.get('words', function(data) {
+   // if there are words 
+  if (!isEmpty(data)) { 
+      chrome.storage.local.set({'old_length': data.words.length}); 
+  }
+  window.addEventListener("beforeunload", function() {
+    chrome.storage.local.get('old_length', function(new_data) {
+      if (data.words.length == new_data['old_length']) {
+        clear(); 
+      }
+    }); 
+  }); 
+});
+
 
 document.addEventListener("DOMContentLoaded", function(){
   filterfeed(); 
-  clear(); 
 }); 
 
-
+var els = document.getElementsByTagName("a");
+  for (i = 0; i < els.length; i++) {
+    el = els[i];
+    el.addEventListener("click", function(e) {
+      var href = e.target.getAttribute('href'); 
+      if (href == "https://www.facebook.com/?ref=logo") {
+        clear(); 
+        filterfeed(); 
+      }
+    }, false); 
+  }
 
 var old_URL = document.URL;
 var old_body = document.body; 
 var old_posts = document.getElementsByClassName("_4ikz");
-document.addEventListener("click", function(){
+var counter = 0; 
+var fired = false; 
+document.addEventListener("click", handler); 
+
+function handler(e) {
+  document.removeEventListener("click", handler);
+  var counter = 0; 
   var new_URL = document.URL; 
   if (old_URL != new_URL) {
     setTimeout(function() {
         clear(); 
-        filterfeed(); 
+        filterfeed();
         var observer = new MutationObserver(function(mutations) {
            mutations.forEach(function(mutation) {
            filterfeed(); 
@@ -230,8 +258,7 @@ document.addEventListener("click", function(){
         }
     }, 2000); 
   }
-
-});
+}
 
 
 
